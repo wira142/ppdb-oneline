@@ -8,4 +8,8 @@ class SchoolController extends Controller
     {
         return view('schools_page', ['page' => 'school']);
     }
+    public function show()
+    {
+        return view('show_school', ['page' => 'school']);
+    }
 }

@@ -17,7 +17,6 @@
   <!-- Scripts -->
   @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-
   <link rel="stylesheet" href="{{ URL::asset('storage/css/app.css') }}">
 
 </head>
@@ -29,7 +28,11 @@
     <main class="py-4">
       @yield('content')
     </main>
+
+    @include('layouts.partials.footer')
   </div>
 </body>
+
+<script src="https://kit.fontawesome.com/d7be5f7ff2.js" crossorigin="anonymous"></script>
 
 </html>

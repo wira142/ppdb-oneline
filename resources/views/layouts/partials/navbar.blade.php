@@ -14,13 +14,13 @@
         <li class="nav-item">
           <a href="/"
             class="nav-link
-            @if ($page == 'home') {{ 'active' }} @endif
+            @if (@$page == 'home') {{ 'active' }} @endif
           ">Home</a>
         </li>
         <li class="nav-item">
           <a href="/schools"
             class="nav-link 
-            @if ($page == 'school') {{ 'active' }} @endif
+            @if (@$page == 'school') {{ 'active' }} @endif
           ">Schools</a>
         </li>
       </ul>
