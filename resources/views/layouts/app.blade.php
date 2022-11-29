@@ -19,6 +19,8 @@
 
   <link rel="stylesheet" href="{{ URL::asset('storage/css/app.css') }}">
 
+  @yield('link')
+
 </head>
 
 <body>
@@ -34,5 +36,6 @@
 </body>
 
 <script src="https://kit.fontawesome.com/d7be5f7ff2.js" crossorigin="anonymous"></script>
+@yield('script')
 
 </html>

@@ -37,7 +37,7 @@
             </p>
           </div>
           <div class="col-md-6 text-end">
-            <a href="#" class="btn btn-outline-warning btn-lg">Register Now!</a>
+            <a href="/schools/registration" class="btn btn-outline-warning btn-lg">Register Now!</a>
           </div>
         </div>
       </div>

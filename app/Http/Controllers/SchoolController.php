@@ -12,4 +12,8 @@ class SchoolController extends Controller
     {
         return view('show_school', ['page' => 'school']);
     }
+    public function regisForm()
+    {
+        return view('registration_form', ['page' => 'school']);
+    }
 }

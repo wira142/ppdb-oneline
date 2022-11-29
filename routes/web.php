@@ -25,4 +25,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
     Route::get('/show', [SchoolController::class, 'show']);
+    Route::get('/registration', [SchoolController::class, 'regisForm']);
 });
