@@ -18,9 +18,9 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('index', ['page' => 'home']);
-});
+})->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
