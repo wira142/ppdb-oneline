@@ -75,13 +75,19 @@
                 </div>
               </div>
               <div class="col-md">
+                <label for="image_profile" class="form-label">Image Profile</label>
+                <div class="input-group mb-3">
+                  <input type="file" class="form-control" id="image_profile">
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md">
                 <div class="mb-3">
                   <label for="address" class="form-label">Address</label>
                   <input type="text" name="address" class="form-control" id="address">
                 </div>
               </div>
-            </div>
-            <div class="row mb-3">
               <div class="col-md">
                 <div class="mb-3">
                   <label for="province" class="form-label">Province</label>
@@ -89,6 +95,8 @@
                   </select>
                 </div>
               </div>
+            </div>
+            <div class="row mb-3">
               <div class="col-md">
                 <div class="mb-3">
                   <label for="city" class="form-label">City</label>
