@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,8 @@ Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
     Route::get('/show', [SchoolController::class, 'show']);
     Route::get('/registration', [SchoolController::class, 'regisForm']);
+});
+
+Route::prefix('/user')->group(function () {
+    Route::get('/', [ProfileController::class, 'index']);
 });

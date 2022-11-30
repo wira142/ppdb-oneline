@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('link')
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endsection
-
 @section('content')
   <div class="container">
     <div class="row justify-content-center shadow rounded">
@@ -293,10 +289,7 @@
 
 
 @section('script')
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
     const offAll = () => {
