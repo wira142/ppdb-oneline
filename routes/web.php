@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,5 @@ Route::prefix('/schools')->group(function () {
 
 Route::prefix('/user')->group(function () {
     Route::get('/', [ProfileController::class, 'index']);
+    Route::get('/submission', [RegistrationController::class, 'submission']);
 });

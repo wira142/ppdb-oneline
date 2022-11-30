@@ -23,6 +23,12 @@
             @if (@$page == 'school') {{ 'active' }} @endif
           ">Schools</a>
         </li>
+        @auth
+          <li class="nav-item">
+            <a class="nav-link  @if (@$page == 'submission') {{ 'active' }} @endif"
+              href="/user/submission">Submission</a>
+          </li>
+        @endauth
       </ul>
 
       <!-- Right Side Of Navbar -->
@@ -48,7 +54,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
               <a class="dropdown-item" href="/user">Profile</a>
+
               <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

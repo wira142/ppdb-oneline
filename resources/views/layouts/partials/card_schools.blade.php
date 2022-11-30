@@ -1,6 +1,6 @@
 <div class="d-flex gap-4 list-card-schools flex-wrap">
   @for ($i = 0; $i < 3; $i++)
-    <div class="card" style="width: 15rem;">
+    <div class="card">
       <img src="{{ asset('storage/schools_image/school_building.jpg') }}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title fw-bold">Title Schools</h5>
