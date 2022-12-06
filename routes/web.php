@@ -32,5 +32,9 @@ Route::prefix('/schools')->group(function () {
 
 Route::prefix('/user')->group(function () {
     Route::get('/', [ProfileController::class, 'index']);
-    Route::get('/submission', [RegistrationController::class, 'submission']);
+    Route::prefix('/submission')->group(function () {
+        Route::get('/', [RegistrationController::class, 'submission']);
+        Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
+
+    });
 });

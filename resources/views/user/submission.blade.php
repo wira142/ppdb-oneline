@@ -14,7 +14,7 @@
               <p class="text-secondary">submit : 12 Desember 2021</p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="text-warning mb-0">Pending</p>
-                <a href="#" class="btn btn-info">Action</a>
+                <a href="/user/submission/pending" class="btn btn-info">Action</a>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@
               <p class="text-secondary">submit : 12 Desember 2021</p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="text-success mb-0">Success</p>
-                <a href="#" class="btn btn-info">Action</a>
+                <a href="/user/submission/success" class="btn btn-info">Action</a>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
               <p class="text-secondary">submit : 12 Desember 2021</p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="text-danger mb-0">Rejected</p>
-                <a href="#" class="btn btn-info">Action</a>
+                <a href="/user/submission/reject" class="btn btn-info">Action</a>
               </div>
             </div>
           </div>

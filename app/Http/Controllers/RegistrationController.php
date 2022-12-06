@@ -8,4 +8,8 @@ class RegistrationController extends Controller
     {
         return view('user.submission', ['page' => 'submission']);
     }
+    public function detailSubmission($registration)
+    {
+        return view('user.action_submission', ['page' => 'submission', 'status' => $registration]);
+    }
 }
