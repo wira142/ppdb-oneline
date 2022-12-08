@@ -32,7 +32,7 @@ Route::prefix('/schools')->group(function () {
 
 Route::prefix('/user')->group(function () {
     Route::get('/', [ProfileController::class, 'index']);
-    Route::get('/school', [SchoolController::class, 'mySchool']);
+    Route::get('/school', [SchoolController::class, 'mySchool'])->middleware('owner');
     Route::prefix('/submission')->group(function () {
         Route::get('/', [RegistrationController::class, 'submission']);
         Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
