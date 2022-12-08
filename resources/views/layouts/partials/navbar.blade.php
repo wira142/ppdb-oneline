@@ -23,12 +23,12 @@
             @if (@$page == 'school') {{ 'active' }} @endif
           ">Schools</a>
         </li>
-        @auth
+        @if (auth()->user()->level == 'student' || auth()->user()->level == 'owner')
           <li class="nav-item">
             <a class="nav-link  @if (@$page == 'submission') {{ 'active' }} @endif"
               href="/user/submission">Submission</a>
           </li>
-        @endauth
+        @endif
       </ul>
 
       <!-- Right Side Of Navbar -->
@@ -56,6 +56,9 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
               <a class="dropdown-item" href="/user">Profile</a>
+              @if (auth()->user()->level == 'user' || auth()->user()->level == 'owner')
+                <a class="dropdown-item" href="/user/school">School</a>
+              @endif
 
               <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();

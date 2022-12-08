@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('personal_id')->default('(uuid())')->primary();
             // $table->uuid('id')
             $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->string('image');
             $table->char('nisn', 10);
             $table->char('nik', 16);
             $table->char('phone', 16);

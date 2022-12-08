@@ -16,4 +16,8 @@ class SchoolController extends Controller
     {
         return view('registration_form', ['page' => 'school']);
     }
+    public function mySchool()
+    {
+        return view('user.school', ['page' => '']);
+    }
 }

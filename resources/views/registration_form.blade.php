@@ -290,7 +290,6 @@
 
 @section('script')
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-
   <script>
     const offAll = () => {
       $("#city").prop("disabled", true);

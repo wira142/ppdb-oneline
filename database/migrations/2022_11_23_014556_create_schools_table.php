@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('district');
             $table->text('city');
             $table->text('province');
+            $table->text('description');
             $table->timestamps();
         });
     }

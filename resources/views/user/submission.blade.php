@@ -43,13 +43,14 @@
         </div>
         <div class="history mt-5">
           <h5>History</h5>
-          <table class="table">
+          <table class="table align-middle">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">School</th>
                 <th scope="col">Title</th>
                 <th scope="col">Date</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -59,6 +60,9 @@
                 <td>School Name</td>
                 <td>Title Registration</td>
                 <td>12 Desemebr 2021</td>
+                <td>
+                  <p class="m-0 text-danger">Reject</p>
+                </td>
                 <td><a href="#" class="btn btn-outline-primary">Action</a></td>
               </tr>
             </tbody>
