@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->text('poster');
             $table->text('title');
+            $table->enum('degree', ['SD', 'SMP', 'SMA/SMK']);
             $table->text('description');
             $table->dateTime('time_expired');
             $table->timestamps();

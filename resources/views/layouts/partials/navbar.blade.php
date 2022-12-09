@@ -23,12 +23,20 @@
             @if (@$page == 'school') {{ 'active' }} @endif
           ">Schools</a>
         </li>
-        @if (auth()->user()->level == 'student' || auth()->user()->level == 'owner')
-          <li class="nav-item">
-            <a class="nav-link  @if (@$page == 'submission') {{ 'active' }} @endif"
-              href="/user/submission">Submission</a>
-          </li>
-        @endif
+        @auth
+          @if (auth()->user()->level == 'student')
+            <li class="nav-item">
+              <a class="nav-link  @if (@$page == 'submission') {{ 'active' }} @endif"
+                href="/user/submission">Submission</a>
+            </li>
+          @endif
+          @if (auth()->user()->level == 'owner')
+            <li class="nav-item">
+              <a class="nav-link  @if (@$page == 'registrators') {{ 'active' }} @endif"
+                href="/user/registrators">Registrators</a>
+            </li>
+          @endif
+        @endauth
       </ul>
 
       <!-- Right Side Of Navbar -->

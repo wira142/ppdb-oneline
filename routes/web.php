@@ -30,10 +30,16 @@ Route::prefix('/schools')->group(function () {
     Route::get('/registration', [SchoolController::class, 'regisForm']);
 });
 
-Route::prefix('/user')->group(function () {
+Route::prefix('/user')->middleware('auth')->group(function () {
     Route::get('/', [ProfileController::class, 'index']);
-    Route::get('/school', [SchoolController::class, 'mySchool'])->middleware('owner');
-    Route::prefix('/submission')->group(function () {
+    Route::prefix('')->middleware('owner')->group(function () {
+        Route::get('/school', [SchoolController::class, 'mySchool']);
+        Route::prefix('/registrators')->group(function () {
+            Route::get('/', [RegistrationController::class, 'registrators']);
+            Route::get('/user_id', [RegistrationController::class, 'showStudent']);
+        });
+    });
+    Route::prefix('/submission')->middleware('student')->group(function () {
         Route::get('/', [RegistrationController::class, 'submission']);
         Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
     });

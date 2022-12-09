@@ -16,10 +16,10 @@ class OwnerLevel
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->level == 'owner') {
+        if (@auth()->user()->level == 'owner') {
             return $next($request);
         } else {
-            return back();
+            return redirect()->route('home');
         }
 
     }

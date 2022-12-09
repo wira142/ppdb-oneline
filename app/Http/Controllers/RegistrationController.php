@@ -12,4 +12,14 @@ class RegistrationController extends Controller
     {
         return view('user.action_submission', ['page' => 'submission', 'status' => $registration]);
     }
+
+    //owner
+    public function registrators()
+    {
+        return view('owner.registrators', ['page' => 'registrators']);
+    }
+    public function showStudent()
+    {
+        return view('owner.show-student', ['page' => 'registrators']);
+    }
 }

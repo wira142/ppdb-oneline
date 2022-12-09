@@ -11,8 +11,8 @@
             <img src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
           </div>
           <div class="user-data">
-            <h3>Username</h3>
-            <h6>Student</h6>
+            <h3>{{ auth()->user()->name }}</h3>
+            <h6>{{ auth()->user()->level }}</h6>
             <p class="mb-2"><i class="fa-solid fa-location-dot"></i> Bandung, Indonesia</p>
             <a href="#" class="link-info"><i class="fa-solid fa-pen-to-square"></i> Edit account</a>
           </div>

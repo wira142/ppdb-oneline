@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminLevel;
 use App\Http\Middleware\OwnerLevel;
+use App\Http\Middleware\StudentLevel;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -55,6 +57,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'owner' => OwnerLevel::class,
+        'student' => StudentLevel::class,
+        'admin' => AdminLevel::class,
 
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
