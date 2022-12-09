@@ -16,10 +16,10 @@ class StudentLevel
      */
     public function handle(Request $request, Closure $next)
     {
-        if (@auth()->user()->level == 'student') {
+        if (auth()->user()->level == 'student') {
             return $next($request);
         } else {
-            return back();
+            return redirect('/')->with('permission', 'sorry, the page just can asscess by student!');
         }
     }
 }

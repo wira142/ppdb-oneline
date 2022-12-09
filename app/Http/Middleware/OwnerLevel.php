@@ -19,7 +19,7 @@ class OwnerLevel
         if (@auth()->user()->level == 'owner') {
             return $next($request);
         } else {
-            return redirect()->route('home');
+            return redirect()->route('home')->with('permission', 'sorry, the page just can asscess by school owner!');
         }
 
     }

@@ -4,6 +4,11 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 p-0">
+        @if (session('permission'))
+          <div class="alert alert-danger my-3" role="alert">
+            <h3>{{ session('permission') }}</h3>
+          </div>
+        @endif
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="5000">

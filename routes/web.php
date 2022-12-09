@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
     Route::get('/show', [SchoolController::class, 'show']);
-    Route::get('/registration', [SchoolController::class, 'regisForm']);
+    Route::get('/registration', [SchoolController::class, 'regisForm'])->middleware('student');
 });
 
 Route::prefix('/user')->middleware('auth')->group(function () {

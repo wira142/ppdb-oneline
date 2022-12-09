@@ -19,7 +19,7 @@ class AdminLevel
         if (@auth()->user()->level == 'admin') {
             return $next($request);
         } else {
-            return back();
+            return redirect('/')->with('permission', 'sorry, the page just can asscess by admin!');
         }
     }
 }
