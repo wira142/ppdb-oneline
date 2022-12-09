@@ -37,6 +37,9 @@ Route::prefix('/user')->middleware('auth')->group(function () {
         Route::prefix('/registrators')->group(function () {
             Route::get('/', [RegistrationController::class, 'registrators']);
             Route::get('/user_id', [RegistrationController::class, 'showStudent']);
+            Route::get('/back', function () {
+                return redirect('/user/registrators');
+            });
         });
     });
     Route::prefix('/submission')->middleware('student')->group(function () {
