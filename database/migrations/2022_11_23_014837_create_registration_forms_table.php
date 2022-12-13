@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('registration_forms', function (Blueprint $table) {
-            $table->uuid('form_id')->default('(uuid())')->primary();
+            $table->uuid('form_id')->default(DB::raw('(uuid())'))->primary();
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->text('poster');
             $table->text('title');

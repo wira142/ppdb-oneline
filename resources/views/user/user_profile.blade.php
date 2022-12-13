@@ -17,6 +17,7 @@
             <a href="#" class="link-info"><i class="fa-solid fa-pen-to-square"></i> Edit account</a>
           </div>
         </div>
+
       </div>
       <div class="col-md-7">
         <nav>
