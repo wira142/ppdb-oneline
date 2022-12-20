@@ -6,6 +6,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('user.user_profile');
+        $personal = auth()->user()->personal;
+        return view('user.user_profile', ['personal' => $personal]);
     }
 }

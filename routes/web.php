@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\RegistrationFormController;
 use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,23 +28,27 @@ Route::get('/', function () {
 Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
     Route::get('/show', [SchoolController::class, 'show']);
-    Route::get('/registration', [SchoolController::class, 'regisForm'])->middleware('student');
 });
 
-Route::prefix('/user')->middleware('auth')->group(function () {
-    Route::get('/', [ProfileController::class, 'index']);
-    Route::prefix('')->middleware('owner')->group(function () {
-        Route::get('/school', [SchoolController::class, 'mySchool']);
-        Route::prefix('/registrators')->group(function () {
-            Route::get('/', [RegistrationController::class, 'registrators']);
-            Route::get('/user_id', [RegistrationController::class, 'showStudent']);
-            Route::get('/back', function () {
-                return redirect('/user/registrators');
+Route::middleware('auth')->group(function () {
+    Route::get('/registration', [RegistrationFormController::class, 'regisForm'])->middleware('student');
+    Route::post('/registration', [RegistrationFormController::class, 'store'])->middleware('student')->name('registration');
+
+    Route::prefix('/user')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::prefix('')->middleware('owner')->group(function () {
+            Route::get('/school', [SchoolController::class, 'mySchool']);
+            Route::prefix('/registrators')->group(function () {
+                Route::get('/', [RegistrationController::class, 'registrators']);
+                Route::get('/user_id', [RegistrationController::class, 'showStudent']);
+                Route::get('/back', function () {
+                    return redirect('/user/registrators');
+                });
             });
         });
-    });
-    Route::prefix('/submission')->middleware('student')->group(function () {
-        Route::get('/', [RegistrationController::class, 'submission']);
-        Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
+        Route::prefix('/submission')->middleware('student')->group(function () {
+            Route::get('/', [RegistrationController::class, 'submission']);
+            Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
+        });
     });
 });

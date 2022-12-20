@@ -4,7 +4,13 @@
   <div class="container">
     <div class="row justify-content-center shadow rounded">
       <div class="col-md-8">
-        <form method="POST">
+        @if (session('query'))
+          <div class="alert alert-danger">
+            {{ session('query') }}
+          </div>
+        @endif
+        <form method="post" action="{{ route('registration') }}" enctype="multipart/form-data">
+          @csrf
           <div class="mb-5">
             <div class="row my-3 mt-5">
               <h2 class="fw-bold">Person Data</h2>
@@ -12,13 +18,25 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="nisn" class="form-label">NISN</label>
-                  <input type="text" name="nisn" autofocus class="form-control" id="nisn">
+                  <input type="text" value="{{ old('nisn') }}" name="nisn" autofocus
+                    class="form-control @error('nisn') is-invalid @enderror" id="nisn">
+                  @error('nisn')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="nik" class="form-label">NIK</label>
-                  <input type="number" name="nik" autofocus class="form-control" id="nik">
+                  <input type="text" name="nik" value="{{ old('nik') }}" autofocus
+                    class="form-control @error('nik') is-invalid @enderror" id="nik">
+                  @error('nik')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -26,23 +44,33 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="religion" class="form-label">Religion</label>
-                  <select name="religion" id="religion" class="form-select">
-                    <option value="">Islam</option>
-                    <option value="">Kristen</option>
-                    <option value="">Katolik</option>
-                    <option value="">Hindu</option>
-                    <option value="">Buddha</option>
-                    <option value="">Konghucu</option>
+                  <select name="religion" id="religion" class="form-select @error('religion') is-invalid @enderror">
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen">Kristen</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
                   </select>
+                  @error('religion')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="gender" class="form-label">Gender</label>
-                  <select name="gender" id="gender" class="form-select">
-                    <option value="">Male</option>
-                    <option value="">Female</option>
+                  <select name="gender" id="gender" class="form-select @error('gender') is-invalid @enderror">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </select>
+                  @error('gender')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -50,16 +78,25 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="birthplace" class="form-label">Birth Place</label>
-                  <select name="birthplace" id="birthplace" class="form-select">
-                    <option value="">Bandung</option>
-                    <option value="">Jakarta</option>
-                  </select>
+                  <input type="text" value="{{ old('birthplace') }}" name="birthplace"
+                    class="form-control @error('birthplace') is-invalid @enderror" id="birthplace">
+                  @error('birthplace')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="birthdate" class="form-label">Birth Date</label>
-                  <input type="date" name="birthdate" autofocus class="form-control" id="birthdate">
+                  <input type="date" value="{{ old('birthday') }}" name="birthday"
+                    class="form-control @error('birthday') is-invalid @enderror" id="birthdate">
+                  @error('birthday')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -67,13 +104,25 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="phone" class="form-label">Phone</label>
-                  <input type="text" name="phone" class="form-control" id="phone">
+                  <input type="text" value="{{ old('phone') }}" name="phone"
+                    class="form-control @error('phone') is-invalid @enderror" id="phone">
+                  @error('phone')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
-                <label for="image_profile" class="form-label">Image Profile</label>
+                <label for="imageprofile" class="form-label">Image Profile</label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="image_profile">
+                  <input type="file" value="{{ old('image') }}" name="image" id="imageprofile"
+                    class="form-control @error('imageprofile')is-invalid @enderror">
+                  @error('image')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -81,14 +130,25 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="address" class="form-label">Address</label>
-                  <input type="text" name="address" class="form-control" id="address">
+                  <input type="text" value="{{ old('address') }}" name="address"
+                    class="form-control @error('address') is-invalid @enderror" id="address">
+                  @error('address')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="province" class="form-label">Province</label>
-                  <select name="province" id="province" class="form-select">
+                  <select name="province" id="province" class="form-select @error('province') is-invalid @enderror">
                   </select>
+                  @error('province')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -96,22 +156,37 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="city" class="form-label">City</label>
-                  <select name="city" id="city" class="form-select">
+                  <select name="city" id="city" class="form-select @error('city') is-invalid @enderror">
                   </select>
+                  @error('city')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="district" class="form-label">District</label>
-                  <select name="district" id="district" class="form-select">
+                  <select name="district" id="district" class="form-select @error('district') is-invalid @enderror">
                   </select>
+                  @error('district')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="village" class="form-label">Village</label>
-                  <select name="village" id="village" class="form-select">
+                  <select name="village" id="village" class="form-select @error('village') is-invalid @enderror">
                   </select>
+                  @error('village')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -124,10 +199,16 @@
               <div class="col-auto">
                 <div class="mb-3 d-flex align-items-center gap-3">
                   <label for="father_status" class="form-label mb-0 fw-bold">Status</label>
-                  <select name="father_status" id="father_status" class="form-select border border-warning">
-                    <option value="">Hidup</option>
-                    <option value="">Meninggal</option>
+                  <select name="father_status" id="father_status"
+                    class="form-select border border-warning @error('father_status') is-invalid @enderror">
+                    <option value="Hidup">Hidup</option>
+                    <option value="Meninggal">Meninggal</option>
                   </select>
+                  @error('father_status')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -135,14 +216,26 @@
             <div class="row mb-3">
               <div class="col-md">
                 <div class="mb-3">
-                  <label for="nik" class="form-label">NIK</label>
-                  <input type="number" name="nik" class="form-control" id="nik">
+                  <label for="father_nik" class="form-label">NIK</label>
+                  <input type="text" value="{{ old('father_nik') }}" name="father_nik"
+                    class="form-control @error('father_nik') is-invalid @enderror" id="father_nik">
+                  @error('father_nik')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
-                  <label for="name_father" class="form-label">Name</label>
-                  <input type="text" name="name_father" class="form-control" id="name_father">
+                  <label for="father_name" class="form-label">Name</label>
+                  <input type="text" value="{{ old('father_name') }}" name="father_name"
+                    class="form-control @error('father_name') is-invalid @enderror" id="father_name">
+                  @error('father_name')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -150,29 +243,41 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="study" class="form-label">Study</label>
-                  <select name="study" id="study" class="form-select">
-                    <option value="">SD</option>
-                    <option value="">SMP</option>
-                    <option value="">SMA/SMK</option>
-                    <option value="">D3</option>
-                    <option value="">S1</option>
-                    <option value="">S2</option>
-                    <option value="">S3</option>
+                  <select name="father_study" id="study"
+                    class="form-select @error('father_study') is-invalid @enderror">
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA/SMK">SMA/SMK</option>
+                    <option value="D3">D3</option>
+                    <option value="S1">S1</option>
+                    <option value="S2">S2</option>
+                    <option value="S3">S3</option>
                   </select>
+                  @error('father_study')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="father_job" class="form-label">Job</label>
-                  <select name="father_job" id="father_job" class="form-select">
-                    <option value="">PNS</option>
-                    <option value="">POLISI</option>
-                    <option value="">TNI</option>
-                    <option value="">Pegawai Swasta</option>
-                    <option value="">Wiraswasta</option>
-                    <option value="">Buruh</option>
-                    <option value="">Tidak Bekerja</option>
+                  <select name="father_job" id="father_job"
+                    class="form-select @error('father_job') is-invalid @enderror">
+                    <option value="PNS">PNS</option>
+                    <option value="POLISI">POLISI</option>
+                    <option value="TNI">TNI</option>
+                    <option value="PEGAWAI SWASTA">Pegawai Swasta</option>
+                    <option value="WIRASWASTA">Wiraswasta</option>
+                    <option value="BURUH">Buruh</option>
+                    <option value="TIDAK BEKERJA">Tidak Bekerja</option>
                   </select>
+                  @error('father_job')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -180,19 +285,31 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="father_salary" class="form-label">Salary</label>
-                  <select name="father_salary" id="father_salary" class="form-select">
-                    <option value="">Rp. 100.000 - Rp. 500.000</option>
-                    <option value="">Rp. 500.000 - Rp. 1.000.000</option>
-                    <option value="">Rp. 1.000.000 - Rp. 5.000.000</option>
-                    <option value="">Rp. 5.000.000 - Rp. 10.000.000</option>
-                    <option value="">Lebih dari Rp. 10.000.000</option>
+                  <select name="father_salary" id="father_salary"
+                    class="form-select @error('father_salary') is-invalid @enderror">
+                    <option value="Rp. 100.000 - Rp. 500.000">Rp. 100.000 - Rp. 500.000</option>
+                    <option value="Rp. 500.000 - Rp. 1.000.000">Rp. 500.000 - Rp. 1.000.000</option>
+                    <option value="Rp. 1.000.000 - Rp. 5.000.000">Rp. 1.000.000 - Rp. 5.000.000</option>
+                    <option value="Rp. 5.000.000 - Rp. 10.000.000">Rp. 5.000.000 - Rp. 10.000.000</option>
+                    <option value="Lebih dari Rp. 10.000.000">Lebih dari Rp. 10.000.000</option>
                   </select>
+                  @error('father_salary')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="father_phone" class="form-label">Phone</label>
-                  <input type="text" name="father_phone" class="form-control" id="father_phone">
+                  <input type="text" value="{{ old('father_phone') }}" name="father_phone"
+                    class="form-control @error('father_phone') is-invalid @enderror" id="father_phone">
+                  @error('father_phone')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -205,10 +322,16 @@
               <div class="col-auto">
                 <div class="mb-3 d-flex align-items-center gap-3">
                   <label for="mother_status" class="form-label mb-0 fw-bold">Status</label>
-                  <select name="mother_status" id="mother_status" class="form-select border border-warning">
-                    <option value="">Hidup</option>
-                    <option value="">Meninggal</option>
+                  <select name="mother_status" id="mother_status"
+                    class="form-select border border-warning @error('mother_status') is-invalid @enderror">
+                    <option value="Hidup">Hidup</option>
+                    <option value="Meninggal">Meninggal</option>
                   </select>
+                  @error('mother_status')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -217,13 +340,25 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="mother_nik" class="form-label">NIK</label>
-                  <input type="number" name="mother_nik" class="form-control" id="nik">
+                  <input type="text" value="{{ old('mother_nik') }}" name="mother_nik"
+                    class="form-control @error('mother_nik') is-invalid @enderror" id="nik">
+                  @error('mother_nik')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
-                  <label for="mother_name" class="form-label">Name</label>
-                  <input type="text" name="mother_name" class="form-control" id="name_father">
+                  <label for="mother_name" value="{{ old('mother_name') }}" class="form-label">Name</label>
+                  <input type="text" value="{{ old('mother_name') }}" name="mother_name"
+                    class="form-control @error('mother_name') is-invalid @enderror" id="name_father">
+                  @error('mother_name')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -231,29 +366,41 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="mother_study" class="form-label">Study</label>
-                  <select name="mother_study" id="mother_study" class="form-select">
-                    <option value="">SD</option>
-                    <option value="">SMP</option>
-                    <option value="">SMA/SMK</option>
-                    <option value="">D3</option>
-                    <option value="">S1</option>
-                    <option value="">S2</option>
-                    <option value="">S3</option>
+                  <select name="mother_study" id="mother_study"
+                    class="form-select @error('mother_study') is-invalid @enderror">
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA/SMK">SMA/SMK</option>
+                    <option value="D3">D3</option>
+                    <option value="S1">S1</option>
+                    <option value="S2">S2</option>
+                    <option value="S3">S3</option>
                   </select>
+                  @error('mother_study')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="mother_job" class="form-label">Job</label>
-                  <select name="mother_job" id="mother_job" class="form-select">
-                    <option value="">PNS</option>
-                    <option value="">POLISI</option>
-                    <option value="">TNI</option>
-                    <option value="">Pegawai Swasta</option>
-                    <option value="">Wiraswasta</option>
-                    <option value="">Buruh</option>
-                    <option value="">Tidak Bekerja</option>
+                  <select name="mother_job" id="mother_job"
+                    class="form-select @error('mother_job') is-invalid @enderror">
+                    <option value="PNS">PNS</option>
+                    <option value="POLISI">POLISI</option>
+                    <option value="TNI">TNI</option>
+                    <option value="PEGAWAI SWASTA">Pegawai Swasta</option>
+                    <option value="WIRASWASTA">Wiraswasta</option>
+                    <option value="BURUH">Buruh</option>
+                    <option value="TIDAK BEKERJA">Tidak Bekerja</option>
                   </select>
+                  @error('mother_job')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -261,19 +408,31 @@
               <div class="col-md">
                 <div class="mb-3">
                   <label for="mother_salary" class="form-label">Salary</label>
-                  <select name="mother_salary" id="mother_salary" class="form-select">
-                    <option value="">Rp. 100.000 - Rp. 500.000</option>
-                    <option value="">Rp. 500.000 - Rp. 1.000.000</option>
-                    <option value="">Rp. 1.000.000 - Rp. 5.000.000</option>
-                    <option value="">Rp. 5.000.000 - Rp. 10.000.000</option>
-                    <option value="">Lebih dari Rp. 10.000.000</option>
+                  <select name="mother_salary" id="mother_salary"
+                    class="form-select @error('mother_salary') is-invalid @enderror">
+                    <option value="Rp. 100.000 - Rp. 500.000">Rp. 100.000 - Rp. 500.000</option>
+                    <option value="Rp. 500.000 - Rp. 1.000.000">Rp. 500.000 - Rp. 1.000.000</option>
+                    <option value="Rp. 1.000.000 - Rp. 5.000.000">Rp. 1.000.000 - Rp. 5.000.000</option>
+                    <option value="Rp. 5.000.000 - Rp. 10.000.000">Rp. 5.000.000 - Rp. 10.000.000</option>
+                    <option value="Lebih dari Rp. 10.000.000">Lebih dari Rp. 10.000.000</option>
                   </select>
+                  @error('mother_salary')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
               <div class="col-md">
                 <div class="mb-3">
                   <label for="mother_phone" class="form-label">Phone</label>
-                  <input type="text" name="mother_phone" class="form-control" id="mother_phone">
+                  <input type="text" value="{{ old('mother_phone') }}" name="mother_phone"
+                    class="form-control @error('mother_phone') is-invalid @enderror" id="mother_phone">
+                  @error('mother_phone')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
               </div>
             </div>

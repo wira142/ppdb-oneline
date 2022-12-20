@@ -23,7 +23,7 @@ return new class extends Migration
             $table->char('nik', 16);
             $table->char('phone', 16);
             $table->enum('religion', ['Islam', 'Kristen', 'Katolik', 'Buddha', 'Hindu', 'Konghucu']);
-            $table->enum('gender', ['Laki-Laki', 'Perempuan']);
+            $table->enum('gender', ['Male', 'Female']);
             $table->date('birthday');
             $table->text('birthplace');
             $table->text('address');

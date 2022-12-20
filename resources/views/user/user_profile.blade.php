@@ -3,6 +3,13 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center gap-4">
+      @if (session('query'))
+        <div class="col-md-12">
+          <div class="alert alert-success">
+            {{ session('query') }}
+          </div>
+        </div>
+      @endif
       <div class="col mb-4 profile-section">
         <h2 class="fw-bold">Profile</h2>
         <hr>
@@ -12,7 +19,7 @@
           </div>
           <div class="user-data">
             <h3>{{ auth()->user()->name }}</h3>
-            <h6>{{ auth()->user()->level }}</h6>
+            <h5>{{ auth()->user()->level }}</h5>
             <p class="mb-2"><i class="fa-solid fa-location-dot"></i> Bandung, Indonesia</p>
             <a href="#" class="link-info"><i class="fa-solid fa-pen-to-square"></i> Edit account</a>
           </div>
@@ -33,117 +40,129 @@
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane fade show active py-3" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
             tabindex="0">
-            <table cellpadding="3" cellspacing="3">
-              <tr>
-                <td>NISN</td>
-                <td>:</td>
-                <th>000278312</th>
-              </tr>
-              <tr>
-                <td>NIK</td>
-                <td>:</td>
-                <td>3204280104020007</td>
-              </tr>
-              <tr>
-                <td>Birth Place, Day</td>
-                <td>:</td>
-                <td>Bandung, 1 April 2002</td>
-              </tr>
-              <tr>
-                <td>Gender</td>
-                <td>:</td>
-                <td>Male</td>
-              </tr>
-              <tr>
-                <td>Religion</td>
-                <td>:</td>
-                <td>Kristen</td>
-              </tr>
-              <tr>
-                <td>Phone</td>
-                <td>:</td>
-                <td>089652222516</td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td>Jln.Cipasir Clustur Panorama Al-Hamim no.13 Rt.21 Rw.02 Des.Jelegong Kec.Rancaekek Kab.Bandung Jawa
-                  Barat</td>
-              </tr>
-            </table>
+            @if ($personal == null)
+              <h4>Data is not set!</h4>
+            @else
+              <table cellpadding="3" cellspacing="3">
+                <tr>
+                  <td>NISN</td>
+                  <td>:</td>
+                  <th>000278312</th>
+                </tr>
+                <tr>
+                  <td>NIK</td>
+                  <td>:</td>
+                  <td>3204280104020007</td>
+                </tr>
+                <tr>
+                  <td>Birth Place, Day</td>
+                  <td>:</td>
+                  <td>Bandung, 1 April 2002</td>
+                </tr>
+                <tr>
+                  <td>Gender</td>
+                  <td>:</td>
+                  <td>Male</td>
+                </tr>
+                <tr>
+                  <td>Religion</td>
+                  <td>:</td>
+                  <td>Kristen</td>
+                </tr>
+                <tr>
+                  <td>Phone</td>
+                  <td>:</td>
+                  <td>089652222516</td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>:</td>
+                  <td>Jln.Cipasir Clustur Panorama Al-Hamim no.13 Rt.21 Rw.02 Des.Jelegong Kec.Rancaekek Kab.Bandung Jawa
+                    Barat</td>
+                </tr>
+              </table>
+            @endif
           </div>
           <div class="tab-pane fade py-3" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
             tabindex="0">
-            <table cellpadding="3" cellspacing="3">
-              <tr>
-                <td>Name</td>
-                <td>:</td>
-                <th>Ket Fung</th>
-              </tr>
-              <tr>
-                <td>NIK</td>
-                <td>:</td>
-                <td>3204280104020007</td>
-              </tr>
-              <tr>
-                <td>Study</td>
-                <td>:</td>
-                <td>S1</td>
-              </tr>
-              <tr>
-                <td>Job</td>
-                <td>:</td>
-                <td>Pegawai Swasta</td>
-              </tr>
-              <tr>
-                <td>Salary</td>
-                <td>:</td>
-                <td>Rp.1.000.000 - Rp.5.000.000</td>
-              </tr>
-              <tr>
-                <td>Phone</td>
-                <td>:</td>
-                <td>089652222516</td>
-              </tr>
-            </table>
+            @if (@$father == null)
+              <h4>Data is not set!</h4>
+            @else
+              <table cellpadding="3" cellspacing="3">
+                <tr>
+                  <td>Name</td>
+                  <td>:</td>
+                  <th>Ket Fung</th>
+                </tr>
+                <tr>
+                  <td>NIK</td>
+                  <td>:</td>
+                  <td>3204280104020007</td>
+                </tr>
+                <tr>
+                  <td>Study</td>
+                  <td>:</td>
+                  <td>S1</td>
+                </tr>
+                <tr>
+                  <td>Job</td>
+                  <td>:</td>
+                  <td>Pegawai Swasta</td>
+                </tr>
+                <tr>
+                  <td>Salary</td>
+                  <td>:</td>
+                  <td>Rp.1.000.000 - Rp.5.000.000</td>
+                </tr>
+                <tr>
+                  <td>Phone</td>
+                  <td>:</td>
+                  <td>089652222516</td>
+                </tr>
+              </table>
+            @endif
           </div>
           <div class="tab-pane fade py-3" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"
             tabindex="0">
-            <table cellpadding="3" cellspacing="3">
-              <tr>
-                <td>Name</td>
-                <td>:</td>
-                <th>Neneng Wati</th>
-              </tr>
-              <tr>
-                <td>NIK</td>
-                <td>:</td>
-                <td>3204280104020007</td>
-              </tr>
-              <tr>
-                <td>Study</td>
-                <td>:</td>
-                <td>S1</td>
-              </tr>
-              <tr>
-                <td>Job</td>
-                <td>:</td>
-                <td>Ibu Rumah Tangga</td>
-              </tr>
-              <tr>
-                <td>Salary</td>
-                <td>:</td>
-                <td>Rp.1.000.000 - Rp.5.000.000</td>
-              </tr>
-              <tr>
-                <td>Phone</td>
-                <td>:</td>
-                <td>089652222516</td>
-              </tr>
-            </table>
+            @if (@$mother == null)
+              <h4>Data is not set!</h4>
+            @else
+              <table cellpadding="3" cellspacing="3">
+                <tr>
+                  <td>Name</td>
+                  <td>:</td>
+                  <th>Neneng Wati</th>
+                </tr>
+                <tr>
+                  <td>NIK</td>
+                  <td>:</td>
+                  <td>3204280104020007</td>
+                </tr>
+                <tr>
+                  <td>Study</td>
+                  <td>:</td>
+                  <td>S1</td>
+                </tr>
+                <tr>
+                  <td>Job</td>
+                  <td>:</td>
+                  <td>Ibu Rumah Tangga</td>
+                </tr>
+                <tr>
+                  <td>Salary</td>
+                  <td>:</td>
+                  <td>Rp.1.000.000 - Rp.5.000.000</td>
+                </tr>
+                <tr>
+                  <td>Phone</td>
+                  <td>:</td>
+                  <td>089652222516</td>
+                </tr>
+              </table>
+            @endif
           </div>
         </div>
-        <div class="text-center"><a href="" class="btn btn-primary">Change Data</a></div>
+        <div class="text-center"><a href="/registration" class="btn btn-primary">Change Data</a></div>
       </div>
     </div>
   </div>

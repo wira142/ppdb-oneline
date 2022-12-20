@@ -67,6 +67,7 @@
             </div>
             <div class="col-md-9 mt-3">
               <button class="btn btn-primary" type="submit">Update Profile</button>
+              <a href="#" class="btn btn-outline-danger">Delete School Profile</a>
             </div>
           </div>
         </form>

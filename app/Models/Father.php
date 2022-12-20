@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Father extends Model
 {
     use HasFactory;
+    protected $primaryKey = "father_id";
+    protected $fillable = [
+        'status',
+        'nik',
+        'name',
+        'study',
+        'job',
+        'salary',
+        'phone',
+        'user_id',
+    ];
 }

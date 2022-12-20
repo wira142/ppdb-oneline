@@ -21,7 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id',
     ];
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +43,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // relations
+
+    public function personal()
+    {
+        return $this->hasOne(Personal::class, 'user_id');
+    }
 }
