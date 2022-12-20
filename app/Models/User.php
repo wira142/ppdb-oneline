@@ -50,4 +50,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Personal::class, 'user_id');
     }
+    public function father()
+    {
+        return $this->hasOne(Father::class, 'user_id');
+    }
+    public function mother()
+    {
+        return $this->hasOne(Mother::class, 'user_id');
+    }
 }

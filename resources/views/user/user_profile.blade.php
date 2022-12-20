@@ -47,38 +47,39 @@
                 <tr>
                   <td>NISN</td>
                   <td>:</td>
-                  <th>000278312</th>
+                  <th>{{ $personal->nisn }}</th>
                 </tr>
                 <tr>
                   <td>NIK</td>
                   <td>:</td>
-                  <td>3204280104020007</td>
+                  <td>{{ $personal->nik }}</td>
                 </tr>
                 <tr>
                   <td>Birth Place, Day</td>
                   <td>:</td>
-                  <td>Bandung, 1 April 2002</td>
+                  <td>{{ $personal->birthplace . ', ' . date('d M Y', strtotime($personal->birthday)) }}</td>
                 </tr>
                 <tr>
                   <td>Gender</td>
                   <td>:</td>
-                  <td>Male</td>
+                  <td>{{ $personal->gender }}</td>
                 </tr>
                 <tr>
                   <td>Religion</td>
                   <td>:</td>
-                  <td>Kristen</td>
+                  <td>{{ $personal->religion }}</td>
                 </tr>
                 <tr>
                   <td>Phone</td>
                   <td>:</td>
-                  <td>089652222516</td>
+                  <td>{{ $personal->phone }}</td>
                 </tr>
                 <tr>
                   <td>Address</td>
                   <td>:</td>
-                  <td>Jln.Cipasir Clustur Panorama Al-Hamim no.13 Rt.21 Rw.02 Des.Jelegong Kec.Rancaekek Kab.Bandung Jawa
-                    Barat</td>
+                  <td>
+                    {{ $personal->address . ' ' . $personal->village . ' ' . $personal->district . ' ' . $personal->city . ' ' . $personal->province }}
+                  </td>
                 </tr>
               </table>
             @endif
@@ -92,32 +93,32 @@
                 <tr>
                   <td>Name</td>
                   <td>:</td>
-                  <th>Ket Fung</th>
+                  <th>{{ $father->name }}</th>
                 </tr>
                 <tr>
                   <td>NIK</td>
                   <td>:</td>
-                  <td>3204280104020007</td>
+                  <td>{{ $father->nik }}</td>
                 </tr>
                 <tr>
                   <td>Study</td>
                   <td>:</td>
-                  <td>S1</td>
+                  <td>{{ $father->study }}</td>
                 </tr>
                 <tr>
                   <td>Job</td>
                   <td>:</td>
-                  <td>Pegawai Swasta</td>
+                  <td>{{ $father->job }}</td>
                 </tr>
                 <tr>
                   <td>Salary</td>
                   <td>:</td>
-                  <td>Rp.1.000.000 - Rp.5.000.000</td>
+                  <td>{{ $father->salary }}</td>
                 </tr>
                 <tr>
                   <td>Phone</td>
                   <td>:</td>
-                  <td>089652222516</td>
+                  <td>{{ $father->phone }}</td>
                 </tr>
               </table>
             @endif
@@ -131,32 +132,32 @@
                 <tr>
                   <td>Name</td>
                   <td>:</td>
-                  <th>Neneng Wati</th>
+                  <th>{{ $mother->name }}</th>
                 </tr>
                 <tr>
                   <td>NIK</td>
                   <td>:</td>
-                  <td>3204280104020007</td>
+                  <td>{{ $mother->nik }}</td>
                 </tr>
                 <tr>
                   <td>Study</td>
                   <td>:</td>
-                  <td>S1</td>
+                  <td>{{ $mother->study }}</td>
                 </tr>
                 <tr>
                   <td>Job</td>
                   <td>:</td>
-                  <td>Ibu Rumah Tangga</td>
+                  <td>{{ $mother->job }}</td>
                 </tr>
                 <tr>
                   <td>Salary</td>
                   <td>:</td>
-                  <td>Rp.1.000.000 - Rp.5.000.000</td>
+                  <td>{{ $mother->salary }}</td>
                 </tr>
                 <tr>
                   <td>Phone</td>
                   <td>:</td>
-                  <td>089652222516</td>
+                  <td>{{ $mother->phone }}</td>
                 </tr>
               </table>
             @endif
