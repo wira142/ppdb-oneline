@@ -15,7 +15,11 @@
         <hr>
         <div class="d-flex gap-4 align-items-center">
           <div class="image-profile" style="">
-            <img src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
+            @if ($personal != null)
+              <img src="{{ asset('storage/personal_images/' . $personal->image) }}" alt="">
+            @else
+              <img src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
+            @endif
           </div>
           <div class="user-data">
             <h3>{{ auth()->user()->name }}</h3>
@@ -77,8 +81,8 @@
                 <tr>
                   <td>Address</td>
                   <td>:</td>
-                  <td>
-                    {{ $personal->address . ' ' . $personal->village . ' ' . $personal->district . ' ' . $personal->city . ' ' . $personal->province }}
+                  <td class="address">
+                    {{ $personal->address }}
                   </td>
                 </tr>
               </table>
@@ -167,4 +171,43 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('script')
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan/{{ $personal->village }}',
+        type: 'GET',
+        dataType: 'json',
+        success: res =>
+          $(".address").append("Kel." + res.nama + ", ")
+      }).then((result) => {
+        $.ajax({
+          url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/{{ $personal->district }}',
+          type: 'GET',
+          dataType: 'json',
+          success: res =>
+            $(".address").append("Kec." + res.nama + ", ")
+        }).then(() => {
+          $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/{{ $personal->city }}',
+            type: 'GET',
+            dataType: 'json',
+            success: res =>
+              $(".address").append(res.nama + ", ")
+          }).then(() => {
+            $.ajax({
+              url: 'https://dev.farizdotid.com/api/daerahindonesia/provinsi/{{ $personal->province }}',
+              type: 'GET',
+              dataType: 'json',
+              success: res =>
+                $(".address").append("Prov." + res.nama)
+            })
+          })
+        })
+      })
+    })
+  </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\Father;
 use App\Models\Mother;
 use App\Models\Personal;
+use App\Models\User;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,19 @@ class RegistrationFormController extends Controller
 
     public function regisForm()
     {
-        return view('registration_form', ['page' => 'school']);
+        if (auth()->user()->personal == null) {
+            return view('registration_form', ['page' => 'school']);
+        } else {
+            $personal = auth()->user()->personal;
+            $father = auth()->user()->father;
+            $mother = auth()->user()->mother;
+            return view('user.show_personal_data', [
+                'page' => 'school',
+                'personal' => $personal,
+                'father' => $father,
+                'mother' => $mother,
+            ]);
+        }
     }
 
     public function store(RegistrationRequest $request)
@@ -69,6 +82,7 @@ class RegistrationFormController extends Controller
             Personal::create($personal);
             Father::create($father);
             Mother::create($mother);
+            User::where('id', auth()->user()->id)->update(['level' => 'student']);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Add personal data is success!');
         } catch (\Exception$th) {
@@ -76,5 +90,6 @@ class RegistrationFormController extends Controller
             return $th;
             return redirect()->back()->with('query', $th)->withInput();
         }
+
     }
 }
