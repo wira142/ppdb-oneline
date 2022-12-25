@@ -137,6 +137,10 @@
             </table>
           @endif
         </div>
+        <div class="text-center">
+          <a href="/registration/update" class="btn btn-outline-primary">Change Data</a>
+          <a href="/registration/update" class="btn btn-success">Registration Now</a>
+        </div>
       </div>
     </div>
   </div>

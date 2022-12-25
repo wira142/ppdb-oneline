@@ -34,6 +34,18 @@ class RegistrationFormController extends Controller
             ]);
         }
     }
+    public function updateForm()
+    {
+        $personal = auth()->user()->personal;
+        $father = auth()->user()->father;
+        $mother = auth()->user()->mother;
+        return view('update_registration_form', [
+            'page' => 'school',
+            'personal' => $personal,
+            'father' => $father,
+            'mother' => $mother,
+        ]);
+    }
 
     public function store(RegistrationRequest $request)
     {

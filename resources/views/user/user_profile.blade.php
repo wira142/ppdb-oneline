@@ -167,7 +167,7 @@
             @endif
           </div>
         </div>
-        <div class="text-center"><a href="/registration" class="btn btn-primary">Change Data</a></div>
+        <div class="text-center"><a href="/registration/update" class="btn btn-primary">Change Data</a></div>
       </div>
     </div>
   </div>
