@@ -176,4 +176,22 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function destroy()
+    {
+        try {
+            $image = Personal::where('user_id', auth()->user()->id)->first()->image;
+            DB::beginTransaction();
+            Personal::where('user_id', auth()->user()->id)->delete();
+            Father::where('user_id', auth()->user()->id)->delete();
+            Mother::where('user_id', auth()->user()->id)->delete();
+            User::where('id', auth()->user()->id)->update(['level' => 'user']);
+            $this->fileService->delete('public/personal_images', $image);
+            DB::commit();
+            return redirect()->route('profile')->with('query', 'Delete private data is Success!');
+        } catch (\Exception$th) {
+            DB::rollBack();
+            return redirect()->route('profile')->with('error-query', 'Delete private data is failed!');
+        }
+    }
 }

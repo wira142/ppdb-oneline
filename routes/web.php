@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/profile/delete', [ProfileController::class, 'destroy']);
         Route::prefix('')->middleware('owner')->group(function () {
             Route::get('/school', [SchoolController::class, 'mySchool']);
             Route::prefix('/registrators')->group(function () {

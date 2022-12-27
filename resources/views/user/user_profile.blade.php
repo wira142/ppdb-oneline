@@ -10,6 +10,13 @@
           </div>
         </div>
       @endif
+      @if (session('error-query'))
+        <div class="col-md-12">
+          <div class="alert alert-danger">
+            {{ session('error-query') }}
+          </div>
+        </div>
+      @endif
       <div class="col mb-4 profile-section">
         <h2 class="fw-bold">Profile</h2>
         <hr>
@@ -167,7 +174,16 @@
             @endif
           </div>
         </div>
-        <div class="text-center"><a href="/registration/update" class="btn btn-primary">Change Data</a></div>
+        <div class="text-center">
+          <a href="{{ $personal ? '/registration/update' : '/registration' }}" class="btn btn-primary">
+            @if ($personal)
+              {{ 'Change Data' }}
+            @else
+              {{ 'Insert Data' }}
+            @endif
+          </a>
+          <a href="/user/profile/delete" class="btn btn-outline-danger">Delete Data</a>
+        </div>
       </div>
     </div>
   </div>
@@ -177,37 +193,40 @@
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script>
     $(document).ready(function() {
-      $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan/{{ $personal->village }}',
-        type: 'GET',
-        dataType: 'json',
-        success: res =>
-          $(".address").append("Kel." + res.nama + ", ")
-      }).then((result) => {
+      const village = @$personal - > village
+      if (village != "") {
         $.ajax({
-          url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/{{ $personal->district }}',
+          url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan/{{ @$personal->village }}',
           type: 'GET',
           dataType: 'json',
           success: res =>
-            $(".address").append("Kec." + res.nama + ", ")
-        }).then(() => {
+            $(".address").append("Kel." + res.nama + ", ")
+        }).then((result) => {
           $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/{{ $personal->city }}',
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/{{ @$personal->district }}',
             type: 'GET',
             dataType: 'json',
             success: res =>
-              $(".address").append(res.nama + ", ")
+              $(".address").append("Kec." + res.nama + ", ")
           }).then(() => {
             $.ajax({
-              url: 'https://dev.farizdotid.com/api/daerahindonesia/provinsi/{{ $personal->province }}',
+              url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/{{ @$personal->city }}',
               type: 'GET',
               dataType: 'json',
               success: res =>
-                $(".address").append("Prov." + res.nama)
+                $(".address").append(res.nama + ", ")
+            }).then(() => {
+              $.ajax({
+                url: 'https://dev.farizdotid.com/api/daerahindonesia/provinsi/{{ @$personal->province }}',
+                type: 'GET',
+                dataType: 'json',
+                success: res =>
+                  $(".address").append("Prov." + res.nama)
+              })
             })
           })
         })
-      })
+      }
     })
   </script>
 @endsection
