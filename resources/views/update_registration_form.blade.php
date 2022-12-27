@@ -9,7 +9,7 @@
             {{ session('query') }}
           </div>
         @endif
-        <form method="post" action="{{ route('registration') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('update_registration_form') }}" enctype="multipart/form-data">
           @method('put')
           @csrf
           <div class="mb-5">
@@ -103,11 +103,22 @@
             </div>
             <div class="row mb-3">
               <div class="col-md">
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Phone</label>
-                  <input type="text" value="{{ old('phone', $personal->phone) }}" name="phone"
-                    class="form-control @error('phone') is-invalid @enderror" id="phone">
-                  @error('phone')
+                <div class="mb-3 mx-auto" style="">
+                  @if ($personal != null)
+                    <img id="imgPreview" class="pas-photo"
+                      src="{{ asset('storage/personal_images/' . $personal->image) }}" alt="">
+                  @else
+                    <img id="imgPreview" src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
+                  @endif
+                </div>
+                <label for="imageprofile" class="form-label">Image Profile</label>
+                <div class="input-group mb-3">
+                  <input type="file" value="{{ old('image', $personal->image) }}" name="image" id="imageprofile"
+                    class="form-control @error('imageprofile')is-invalid @enderror">
+
+                  <div class="container text-secondary">*recomendation size is 2x3, 3x4 and 4x6</div>
+
+                  @error('image')
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -115,11 +126,11 @@
                 </div>
               </div>
               <div class="col-md">
-                <label for="imageprofile" class="form-label">Image Profile</label>
-                <div class="input-group mb-3">
-                  <input type="file" value="{{ old('image') }}" name="image" id="imageprofile"
-                    class="form-control @error('imageprofile')is-invalid @enderror">
-                  @error('image')
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input type="text" value="{{ old('phone', $personal->phone) }}" name="phone"
+                    class="form-control @error('phone') is-invalid @enderror" id="phone">
+                  @error('phone')
                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -606,6 +617,22 @@
 
       });
 
+    });
+  </script>
+  <script>
+    $(document).ready(() => {
+      $('#imageprofile').change(function() {
+        const file = this.files[0];
+        console.log(file);
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            console.log(event.target.result);
+            $('#imgPreview').attr('src', event.target.result);
+          }
+          reader.readAsDataURL(file);
+        }
+      });
     });
   </script>
 @endsection

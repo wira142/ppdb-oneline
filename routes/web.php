@@ -32,8 +32,9 @@ Route::prefix('/schools')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/registration', [RegistrationFormController::class, 'regisForm'])->middleware('student');
-    Route::get('/registration/update', [RegistrationFormController::class, 'updateForm'])->middleware('student');
+    Route::get('/registration/update', [RegistrationFormController::class, 'editForm'])->middleware('student');
     Route::post('/registration', [RegistrationFormController::class, 'store'])->middleware('student')->name('registration');
+    Route::put('/registration/update', [RegistrationFormController::class, 'update'])->middleware('student')->name('update_registration_form');
 
     Route::prefix('/user')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('profile');

@@ -36,11 +36,12 @@ class FileService
         try {
             if (!is_null($new_image)) {
                 try {
-                    Storage::delete($path . $old_image);
-                    Storage::put($path, $new_image, 'public');
+                    Storage::delete($path . '/' . $old_image);
+                    // Storage::put($path, $new_image, 'public');
+                    $new_image->store($path);
                     return $new_image->hashName();
                 } catch (\Exception$th) {
-                    return response($th);
+                    throw response($th);
                 }
             } else {
                 return $old_image;
@@ -52,7 +53,7 @@ class FileService
     public function delete($path, $image)
     {
         if (!is_null($image)) {
-            Storage::delete($path . $image);
+            Storage::delete($path . '/' . $image);
         }
     }
 }

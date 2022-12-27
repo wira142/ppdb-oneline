@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Personal;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegistrationRequest extends FormRequest
 {
@@ -25,14 +27,24 @@ class RegistrationRequest extends FormRequest
     {
         return [
             //personal
-            'nisn' => 'required|unique:personals|integer|digits:10',
-            'nik' => 'required|unique:personals|integer|digits:16',
+            'nisn' => ['required', 'integer', 'digits:10',
+                Rule::unique('personals', 'nisn')->ignore($this->user()->id, 'user_id')],
+            'nik' => ['required', 'integer', 'digits:16', Rule::unique('personals', 'nik')->ignore($this->user()->id, 'user_id')],
             'religion' => 'required|alpha',
             'gender' => 'required|alpha',
             'birthplace' => 'required|alpha',
             'birthday' => 'required|date_format:"Y-m-d"',
-            'phone' => 'required|numeric|unique:personals|digits_between:10,14',
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'phone' => ['required', 'numeric', 'digits_between:10,14', Rule::unique('personals', 'phone')->ignore($this->user()->id, 'user_id')],
+            'image' => [Rule::requiredIf(function () {
+
+                if (!empty(Personal::where('user_id', auth()->user()->id)->image)) {
+
+                    return true;
+                }
+
+                return false;
+
+            }), 'image', 'mimes:png,jpg,JPG,jpeg', 'max:2048'],
             'address' => "required",
             'province' => "required",
             'city' => "required",
@@ -41,21 +53,21 @@ class RegistrationRequest extends FormRequest
 
             // father
             'father_status' => 'required',
-            'father_nik' => 'required|unique:fathers,nik|integer|digits:16',
+            'father_nik' => ['required', Rule::unique('fathers', 'nik')->ignore($this->user()->id, 'user_id'), 'integer', 'digits:16'],
             'father_name' => 'required',
             'father_study' => 'required',
             'father_job' => 'required',
             'father_salary' => 'required',
-            'father_phone' => 'required|numeric|unique:fathers,phone|digits_between:10,14',
+            'father_phone' => ['required', 'numeric', Rule::unique('fathers', 'phone')->ignore($this->user()->id, 'user_id'), 'digits_between:10,14'],
 
             // mother
             'mother_status' => 'required',
-            'mother_nik' => 'required|unique:mothers,nik|integer|digits:16',
+            'mother_nik' => ['required', Rule::unique('mothers', 'nik')->ignore($this->user()->id, 'user_id'), 'integer', 'digits:16'],
             'mother_name' => 'required',
             'mother_study' => 'required',
             'mother_job' => 'required',
             'mother_salary' => 'required',
-            'mother_phone' => 'required|numeric|unique:mothers,phone|digits_between:10,14',
+            'mother_phone' => ['required', 'numeric', Rule::unique('mothers', 'phone')->ignore($this->user()->id, 'user_id'), 'digits_between:10,14'],
         ];
     }
 }
