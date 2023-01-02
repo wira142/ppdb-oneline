@@ -10,4 +10,15 @@ class School extends Model
     use HasFactory;
 
     protected $primaryKey = 'school_id';
+    protected $fillable = [
+        'user_id',
+        'name',
+        'address',
+        'city',
+        'district',
+        'province',
+        'school_image',
+        'village',
+        'description',
+    ];
 }

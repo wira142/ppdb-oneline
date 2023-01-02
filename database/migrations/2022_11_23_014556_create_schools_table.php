@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->uuid('school_id')->default(DB::raw('(uuid())'))->primary();
+            $table->text('school_image');
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->text('name');
             $table->text('address');

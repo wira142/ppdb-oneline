@@ -20,15 +20,24 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $personal = auth()->user()->personal;
-        $father = auth()->user()->father;
-        $mother = auth()->user()->mother;
+        $level = auth()->user()->level;
+        if ($level == "student" || $level == "user") {
+            $personal = auth()->user()->personal;
+            $father = auth()->user()->father;
+            $mother = auth()->user()->mother;
 
-        return view('user.user_profile', [
-            'personal' => $personal,
-            'father' => $father,
-            'mother' => $mother,
-        ]);
+            return view('user.user_profile', [
+                'personal' => $personal,
+                'father' => $father,
+                'mother' => $mother,
+            ]);
+        } else {
+            $school = auth()->user()->school;
+            return view('user.user_profile', [
+                'school' => $school,
+            ]);
+
+        }
     }
 
     public function regisForm()
@@ -112,7 +121,6 @@ class ProfileController extends Controller
             return redirect()->route('profile')->with('query', 'Add personal data is success!');
         } catch (\Exception$th) {
             DB::rollBack();
-            return $th;
             return redirect()->back()->with('query', $th)->withInput();
         }
 

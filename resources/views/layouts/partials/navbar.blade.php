@@ -64,7 +64,7 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
               <a class="dropdown-item" href="/user">Profile</a>
-              @if (auth()->user()->level == 'user' || auth()->user()->level == 'owner')
+              @if (auth()->user()->level == 'user')
                 <a class="dropdown-item" href="/user/school">School</a>
               @endif
 
