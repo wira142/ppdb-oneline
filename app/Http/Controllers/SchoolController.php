@@ -66,8 +66,23 @@ class SchoolController extends Controller
             return redirect()->route('profile')->with('query', 'Update school data is success!');
         } catch (\Exception$th) {
             DB::rollBack();
-            return $th;
             return redirect()->route('profile')->with('error-query', 'Update school data is failed!');
+        }
+    }
+    public function destroy()
+    {
+        $user_id = auth()->user()->id;
+        $school_image = auth()->user()->school->school_image;
+        try {
+            DB::beginTransaction();
+            School::where('user_id', $user_id)->delete();
+            $this->fileService->delete('public/school_images', $school_image);
+            User::where('id', $user_id)->update(['level' => 'user']);
+            DB::commit();
+            return redirect()->route('profile')->with('query', 'Delete school data is success!');
+        } catch (\Exception$th) {
+            DB::rollBack();
+            return redirect()->route('profile')->with('error-query', 'Delete school data is failed! ' . $th);
         }
     }
 }

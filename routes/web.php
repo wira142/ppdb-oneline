@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/school', [SchoolController::class, 'mySchool']);
             Route::get('/school/edit', [SchoolController::class, 'editSchool']);
             Route::post('/school', [SchoolController::class, 'store'])->name('store-school');
-            Route::put('/school/update', [SchoolController::class, 'update'])->name('update-school');
+            Route::put('/school', [SchoolController::class, 'update'])->name('update-school');
+            Route::get('/school/delete', [SchoolController::class, 'destroy'])->name('delete-school');
 
             Route::prefix('/registrators')->group(function () {
                 Route::get('/', [RegistrationController::class, 'registrators']);

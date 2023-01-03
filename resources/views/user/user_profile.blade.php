@@ -38,7 +38,7 @@
 
       </div>
       <div class="col-md-7">
-        @if (auth()->user()->level == 'student')
+        @if (auth()->user()->level == 'student' || auth()->user()->level == 'user')
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -234,7 +234,7 @@
                   {{ 'Insert Data' }}
                 @endif
               </a>
-              <a href="/user/profile/delete" class="btn btn-outline-danger">Delete Data</a>
+              <a href="/user/school/delete" class="btn btn-outline-danger">Delete Data</a>
             </div>
           </div>
         @endif
