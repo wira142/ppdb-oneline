@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\School;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SchoolRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +26,10 @@ class SchoolRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5',
-            'address' => "required",
-            'province' => "required",
-            'city' => "required",
-            'district' => "required",
-            'village' => "required",
-            'description' => "required",
-            'school_image' => [Rule::requiredIf(function () {
+            'name'=>'required|min:3',
+            'image' => [Rule::requiredIf(function () {
 
-                if (empty(School::where('user_id', auth()->user()->id)->first()->school_image)) {
+                if (empty(User::where('id', auth()->user()->id)->first()->image)) {
 
                     return true;
                 }

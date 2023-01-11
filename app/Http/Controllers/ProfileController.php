@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\Father;
 use App\Models\Mother;
@@ -25,18 +26,45 @@ class ProfileController extends Controller
             $personal = auth()->user()->personal;
             $father = auth()->user()->father;
             $mother = auth()->user()->mother;
+            $user=auth()->user();
 
             return view('user.user_profile', [
                 'personal' => $personal,
                 'father' => $father,
                 'mother' => $mother,
+                'user'=>$user,
             ]);
         } else {
             $school = auth()->user()->school;
             return view('user.user_profile', [
                 'school' => $school,
+                'user'=>auth()->user()
             ]);
 
+        }
+    }
+
+    public function editProfile(){
+        $data = auth()->user();
+        return view('user.edit_profile',['data'=>$data]);
+    }
+
+    public function updateProfile(ProfileRequest $request){
+        $validated = $request->validated();
+        // $validated['user_id'] = auth()->user()->id;
+        try {
+            DB::beginTransaction();
+            if (auth()->user()->image == $request->file('image') || $request->file('image') == null) {
+                $validated['image'] = $this->fileService->update('public/profile_images', auth()->user()->image);
+            } else {
+                $validated['image'] = $this->fileService->update('public/profile_images', auth()->user()->image, $request->file('image'));
+            }
+            User::where('id', auth()->user()->id)->update($validated);
+            DB::commit();
+            return redirect()->route('profile')->with('query', 'Update school data is success!');
+        } catch (\Exception$th) {
+            DB::rollBack();
+            return redirect()->route('profile')->with('error-query', 'Update school data is failed!');
         }
     }
 
@@ -80,7 +108,6 @@ class ProfileController extends Controller
             'birthplace',
             'birthday',
             'phone',
-            'image',
             'address',
             'province',
             'city',
@@ -112,7 +139,6 @@ class ProfileController extends Controller
         $personal['user_id'] = Auth::user()->id;
         try {
             DB::beginTransaction();
-            $personal['image'] = $this->fileService->store('public/personal_images', $request->file('image'));
             Personal::create($personal);
             Father::create($father);
             Mother::create($mother);
@@ -121,6 +147,7 @@ class ProfileController extends Controller
             return redirect()->route('profile')->with('query', 'Add personal data is success!');
         } catch (\Exception$th) {
             DB::rollBack();
+            return $th;
             return redirect()->back()->with('query', $th)->withInput();
         }
 
@@ -167,11 +194,6 @@ class ProfileController extends Controller
         try {
             $checkPersonal = auth()->user()->personal;
             DB::beginTransaction();
-            if ($checkPersonal->image == $request->file('image') || $request->file('image') == null) {
-                $personal['image'] = $this->fileService->update('public/personal_images', $checkPersonal->image);
-            } else {
-                $personal['image'] = $this->fileService->update('public/personal_images', $checkPersonal->image, $request->file('image'));
-            }
             Personal::where('user_id', auth()->user()->id)->update($personal);
             Father::where('user_id', auth()->user()->id)->update($father);
             Mother::where('user_id', auth()->user()->id)->update($mother);
@@ -188,13 +210,11 @@ class ProfileController extends Controller
     public function destroy()
     {
         try {
-            $image = Personal::where('user_id', auth()->user()->id)->first()->image;
             DB::beginTransaction();
             Personal::where('user_id', auth()->user()->id)->delete();
             Father::where('user_id', auth()->user()->id)->delete();
             Mother::where('user_id', auth()->user()->id)->delete();
             User::where('id', auth()->user()->id)->update(['level' => 'user']);
-            $this->fileService->delete('public/personal_images', $image);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Delete private data is Success!');
         } catch (\Exception$th) {

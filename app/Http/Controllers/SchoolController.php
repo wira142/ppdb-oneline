@@ -46,7 +46,6 @@ class SchoolController extends Controller
             return redirect()->route('profile')->with('query', 'Add school data is success!');
         } catch (\Exception$th) {
             DB::rollBack();
-            return $th;
             return redirect()->route('profile')->with('error-query', 'Add school data is failed!');
         }
     }

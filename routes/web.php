@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/edit', [ProfileController::class, 'editProfile']);
+        Route::put('/edit', [ProfileController::class, 'updateProfile'])->name('update-profile');
         Route::get('/profile/delete', [ProfileController::class, 'destroy']);
         Route::prefix('')->middleware('owner')->group(function () {
 

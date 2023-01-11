@@ -27,7 +27,7 @@ class RegistrationRequest extends FormRequest
     {
         return [
             //personal
-            'nisn' => ['required', 'integer', 'digits:10',
+            'nisn' => ['required', 'numeric', 'digits:10',
                 Rule::unique('personals', 'nisn')->ignore($this->user()->id, 'user_id')],
             'nik' => ['required', 'integer', 'digits:16', Rule::unique('personals', 'nik')->ignore($this->user()->id, 'user_id')],
             'religion' => 'required|alpha',
@@ -35,16 +35,6 @@ class RegistrationRequest extends FormRequest
             'birthplace' => 'required|alpha',
             'birthday' => 'required|date_format:"Y-m-d"',
             'phone' => ['required', 'numeric', 'digits_between:10,14', Rule::unique('personals', 'phone')->ignore($this->user()->id, 'user_id')],
-            'image' => [Rule::requiredIf(function () {
-
-                if (!empty(Personal::where('user_id', auth()->user()->id)->image)) {
-
-                    return true;
-                }
-
-                return false;
-
-            }), 'image', 'mimes:png,jpg,JPG,jpeg', 'max:2048'],
             'address' => "required",
             'province' => "required",
             'city' => "required",

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->char('nik', 16);
             $table->enum('study', ['SD', 'SMP', 'SMA/SMK', 'D3', 'S1', 'S2', 'S3']);
             $table->text('job');
-            $table->integer('salary');
+            $table->string('salary');
             $table->char('phone', 16);
             $table->enum('status', ['Hidup', 'Mati']);
             $table->timestamps();

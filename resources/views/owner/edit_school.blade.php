@@ -10,22 +10,27 @@
           @method('put')
           @csrf
           <div class="row align-items-center">
-            <div class="col-md-3">
-              <div class="image-profile mx-auto mx-md-0" style="">
-                <img src="{{ asset('storage/school_images/' . $school->school_image) }}" id="imgPreview" alt="">
+            <div class="col-md-4">
+              <div class="mx-auto mx-md-0" style="">
+                <img src="{{ asset('storage/school_images/' . $school->school_image) }}" id="imgPreview" class="img-fluid rounded" alt="school image">
               </div>
             </div>
             <div class="col">
               <div class="mb-3">
                 <label for="school_image" class="form-label">Choose New Image</label>
                 <input type="file" name="school_image" value="{{ old('school_image', $school->school_image) }}"
-                  class="form-control" id="school_image">
+                  class="form-control @error('school_image') is-invalid @enderror" id="school_image">
                 <span class="text-secondary">*recomendation shape is rectangular</span>
+                @error('school_image')
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
               </div>
             </div>
           </div>
           <div class="row justify-content-end">
-            <div class="col-md-9">
+            <div class="col-md-8">
               <div class="mb-3">
                 <label for="school_name" class="form-label">Name</label>
                 <input type="text" class="form-control" value="{{ old('school_name', $school->name) }}" name="name"
@@ -71,7 +76,7 @@
                 <textarea name="description" id="description" class="form-control" cols="30" rows="6">{{ old('description', $school->description) }}</textarea>
               </div>
             </div>
-            <div class="col-md-9 mt-3">
+            <div class="col-md-8 mt-3">
               <button class="btn btn-primary" type="submit">Save Profile</button>
             </div>
           </div>

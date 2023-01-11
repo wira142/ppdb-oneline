@@ -114,7 +114,7 @@
                 </div>
               </div>
               <div class="col-md">
-                <label for="imageprofile" class="form-label">Image Profile</label>
+                {{-- <label for="imageprofile" class="form-label">Image Profile</label>
                 <div class="input-group mb-3">
                   <input type="file" value="{{ old('image') }}" name="image" id="imageprofile"
                     class="form-control @error('imageprofile')is-invalid @enderror">
@@ -123,7 +123,7 @@
                       {{ $message }}
                     </div>
                   @enderror
-                </div>
+                </div> --}}
               </div>
             </div>
             <div class="row mb-3">

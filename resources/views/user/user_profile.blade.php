@@ -21,18 +21,22 @@
         <h2 class="fw-bold">Profile</h2>
         <hr>
         <div class="d-flex gap-4 align-items-center">
-          <div class="image-profile" style="">
-            @if (@$personal)
-              <img src="{{ asset('storage/personal_images/' . $personal->image) }}" alt="">
-            @else
-              <img src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
+          <div>
+            <div class="image-profile" style="">
+              @if (@$user->image)
+              <img src="{{ asset('storage/profile_images/' . $user->image) }}" class="img-fluid" alt="">
+              @else
+              <img src="{{ asset('storage/dummy/profile-dummy-2.jpg') }}" class="img-fluid" alt="">
+              @endif
+            </div>
+            @if (!@$user->image)
+            <span class="text-danger">*your photo is not set</span>
             @endif
           </div>
           <div class="user-data">
-            <h3>{{ auth()->user()->name }}</h3>
-            <h5>{{ auth()->user()->level }}</h5>
-            <p class="mb-2"><i class="fa-solid fa-location-dot"></i> Bandung, Indonesia</p>
-            <a href="#" class="link-info"><i class="fa-solid fa-pen-to-square"></i> Edit account</a>
+            <h3>{{ $user->name }}</h3>
+            <h5>{{ $user->level }}</h5>
+            <a href="/user/edit" class="link-info"><i class="fa-solid fa-pen-to-square"></i> Edit account</a>
           </div>
         </div>
 
@@ -186,43 +190,44 @@
             <a href="/user/profile/delete" class="btn btn-outline-danger">Delete Data</a>
           </div>
         @else
+        <h4 class="fw-bold mb-3">School Data</h4>
           <div class="show-schools-image mb-3">
             <img src="{{ asset('storage/school_images/' . $school->school_image) }}" alt="school image"
-              class="img-fluid">
+              class="img-fluid rounded">
           </div>
           <div class="school-data">
             <table class="mb-3">
               <tr>
                 <td>
-                  <h5>Name</h5>
+                  <p>Name</p>
                 </td>
                 <td>
-                  <h5>:</h5>
+                  <p>:</p>
                 </td>
                 <td>
-                  <h5>{{ $school->name }}</h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Address</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5 class="school_address">{{ $school->address . ' ' }}</h5>
+                  <p>{{ $school->name }}</p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <h5>Description</h5>
+                  <p>Address</p>
                 </td>
                 <td>
-                  <h5>:</h5>
+                  <p>:</p>
                 </td>
                 <td>
-                  <h5>{{ $school->description }}</h5>
+                  <p class="school_address">{{ $school->address . ' ' }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="">
+                  <p>Description</p>
+                </td>
+                <td>
+                  <p>:</p>
+                </td>
+                <td>
+                  <p>{{ $school->description }}</p>
                 </td>
               </tr>
             </table>
