@@ -51,7 +51,9 @@
       <div class="col-md-12">
         <h3 fw-bold>Daftar Sekolah</h3>
         <hr>
-        @include('layouts.partials.card_schools')
+        {{-- <div class="container"> --}}
+          @include('layouts.partials.card_schools')
+        {{-- </div> --}}
       </div>
     </div>
   </div>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $schools = School::get();
+        $province = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/provinsi'),true);
+        
+        foreach ($schools as $key => $school) {
+            $school->province = $province['provinsi'][array_search($school->province,array_column($province['provinsi'],'id'))]['nama'];
+            
+            $city = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/kota/'.$school->city),true);
+
+            $school->city = $city['nama'];
+        }
+        return view('index', ['page' => 'home', 'schools'=>$schools]);
     }
 }

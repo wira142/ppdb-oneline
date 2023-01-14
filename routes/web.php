@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SchoolController;
@@ -16,11 +17,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Auth::routes();
 
-Route::get('/', function () {
-    return view('index', ['page' => 'home']);
-})->name('home');
+Route::get('/',[HomeController::class,'index']);
+Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -29,7 +28,7 @@ Route::prefix('/schools')->group(function () {
     Route::get('/show', [SchoolController::class, 'show']);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('')->group(function () {
     Route::get('/registration', [ProfileController::class, 'regisForm'])->middleware('student');
     Route::get('/registration/update', [ProfileController::class, 'editForm'])->middleware('student');
     Route::post('/registration', [ProfileController::class, 'store'])->middleware('student')->name('registration');
