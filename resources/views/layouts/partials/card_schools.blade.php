@@ -1,8 +1,6 @@
 <div class="d-flex gap-3 flex-wrap">
-
-  {{-- @foreach ($schools as $school) --}}
-  @for ($i = 0; $i < 10; $i++)
-      
+  @if (@$schools)
+    @foreach ($schools as $school)
     <div class="card card-school">
       <img src="{{ asset('storage/school_images/'.$schools[0]->school_image) }}" class="card-img-top" alt="...">
       <div class="card-body">
@@ -11,10 +9,11 @@
         <p class="">{{substr_replace($schools[0]->description,' ...',60)}}</p>
       </div>
       <div class="text-end card-footer">
-        <a href="/schools/show" class="btn btn-success">View More</a>
+        <a href="/schools/show/{{$school->school_id}}" class="btn btn-success">View More</a>
       </div>
     </div>
-    {{-- @endforeach --}}
-  @endfor
-
+    @endforeach
+  @else
+    <h5 class="text-center fw-bold">school data not available!</h5>
+  @endif
 </div>

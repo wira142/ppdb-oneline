@@ -25,10 +25,10 @@ Auth::routes();
 
 Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
-    Route::get('/show', [SchoolController::class, 'show']);
+    Route::get('/show/{id}', [SchoolController::class, 'show']);
 });
 
-Route::middleware('')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/registration', [ProfileController::class, 'regisForm'])->middleware('student');
     Route::get('/registration/update', [ProfileController::class, 'editForm'])->middleware('student');
     Route::post('/registration', [ProfileController::class, 'store'])->middleware('student')->name('registration');

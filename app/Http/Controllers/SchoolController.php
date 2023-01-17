@@ -19,9 +19,9 @@ class SchoolController extends Controller
     {
         return view('schools_page', ['page' => 'school']);
     }
-    public function show()
+    public function show(School $id)
     {
-        return view('show_school', ['page' => 'school']);
+        return view('show_school', ['page' => 'school', 'school'=>$id]);
     }
     public function mySchool()
     {

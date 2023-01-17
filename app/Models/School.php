@@ -10,6 +10,7 @@ class School extends Model
     use HasFactory;
 
     protected $primaryKey = 'school_id';
+    protected $keyType = "string";
     protected $fillable = [
         'user_id',
         'name',
