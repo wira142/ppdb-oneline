@@ -7,6 +7,7 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\Father;
 use App\Models\Mother;
 use App\Models\Personal;
+use App\Models\School;
 use App\Models\User;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Auth;
@@ -26,30 +27,31 @@ class ProfileController extends Controller
             $personal = auth()->user()->personal;
             $father = auth()->user()->father;
             $mother = auth()->user()->mother;
-            $user=auth()->user();
+            $user = auth()->user();
 
             return view('user.user_profile', [
                 'personal' => $personal,
                 'father' => $father,
                 'mother' => $mother,
-                'user'=>$user,
+                'user' => $user,
             ]);
         } else {
             $school = auth()->user()->school;
             return view('user.user_profile', [
                 'school' => $school,
-                'user'=>auth()->user()
+                'user' => auth()->user()
             ]);
-
         }
     }
 
-    public function editProfile(){
+    public function editProfile()
+    {
         $data = auth()->user();
-        return view('user.edit_profile',['data'=>$data]);
+        return view('user.edit_profile', ['data' => $data]);
     }
 
-    public function updateProfile(ProfileRequest $request){
+    public function updateProfile(ProfileRequest $request)
+    {
         $validated = $request->validated();
         // $validated['user_id'] = auth()->user()->id;
         try {
@@ -62,13 +64,13 @@ class ProfileController extends Controller
             User::where('id', auth()->user()->id)->update($validated);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Update school data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return redirect()->route('profile')->with('error-query', 'Update school data is failed!');
         }
     }
 
-    public function regisForm()
+    public function regisForm(School $school)
     {
         if (auth()->user()->personal == null) {
             return view('registration_form', ['page' => 'school']);
@@ -81,6 +83,7 @@ class ProfileController extends Controller
                 'personal' => $personal,
                 'father' => $father,
                 'mother' => $mother,
+                'school' => $school
             ]);
         }
     }
@@ -145,12 +148,11 @@ class ProfileController extends Controller
             User::where('id', auth()->user()->id)->update(['level' => 'student']);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Add personal data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return $th;
             return redirect()->back()->with('query', $th)->withInput();
         }
-
     }
     public function update(RegistrationRequest $request)
     {
@@ -199,12 +201,11 @@ class ProfileController extends Controller
             Mother::where('user_id', auth()->user()->id)->update($mother);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Update personal data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return $th;
             return redirect()->back()->with('query', $th)->withInput();
         }
-
     }
 
     public function destroy()
@@ -217,7 +218,7 @@ class ProfileController extends Controller
             User::where('id', auth()->user()->id)->update(['level' => 'user']);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Delete private data is Success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return redirect()->route('profile')->with('error-query', 'Delete private data is failed!');
         }

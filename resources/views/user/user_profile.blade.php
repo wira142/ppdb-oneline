@@ -22,15 +22,15 @@
         <hr>
         <div class="d-flex gap-4 align-items-center">
           <div>
-            <div class="image-profile" style="">
+            <div class="image-profile rounded" style="">
               @if (@$user->image)
-              <img src="{{ asset('storage/profile_images/' . $user->image) }}" class="img-fluid" alt="">
+                <img src="{{ asset('storage/profile_images/' . $user->image) }}" class="img-fluid" alt="">
               @else
-              <img src="{{ asset('storage/dummy/profile-dummy-2.jpg') }}" class="img-fluid" alt="">
+                <img src="{{ asset('storage/dummy/profile-dummy-2.jpg') }}" class="img-fluid" alt="">
               @endif
             </div>
             @if (!@$user->image)
-            <span class="text-danger">*your photo is not set</span>
+              <span class="text-danger">*your photo is not set</span>
             @endif
           </div>
           <div class="user-data">
@@ -180,7 +180,7 @@
             </div>
           </div>
           <div class="text-center">
-            <a href="{{ $personal ? '/registration/update' : '/registration' }}" class="btn btn-primary">
+            <a href="{{ $personal ? route('edit-personal-data') : '/registration' }}" class="btn btn-primary">
               @if ($personal)
                 {{ 'Change Data' }}
               @else
@@ -190,7 +190,7 @@
             <a href="/user/profile/delete" class="btn btn-outline-danger">Delete Data</a>
           </div>
         @else
-        <h4 class="fw-bold mb-3">School Data</h4>
+          <h4 class="fw-bold mb-3">School Data</h4>
           <div class="show-schools-image mb-3">
             <img src="{{ asset('storage/school_images/' . $school->school_image) }}" alt="school image"
               class="img-fluid rounded">

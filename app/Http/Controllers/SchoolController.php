@@ -17,7 +17,18 @@ class SchoolController extends Controller
     }
     public function index()
     {
-        return view('schools_page', ['page' => 'school']);
+        $schools = School::get();
+        $province = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/provinsi'),true);
+        
+        foreach ($schools as $key => $school) {
+            $school->province = $province['provinsi'][array_search($school->province,array_column($province['provinsi'],'id'))]['nama'];
+            
+            $city = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/kota/'.$school->city),true);
+
+            $school->city = $city['nama'];
+        }
+        
+        return view('schools_page', ['page' => 'school','schools'=>$schools]);
     }
     public function show(School $id)
     {

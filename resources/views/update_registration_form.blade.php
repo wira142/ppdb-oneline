@@ -103,29 +103,6 @@
             </div>
             <div class="row mb-3">
               <div class="col-md">
-                <div class="mb-3 mx-auto" style="">
-                  @if ($personal != null)
-                    <img id="imgPreview" class="pas-photo"
-                      src="{{ asset('storage/personal_images/' . $personal->image) }}" alt="">
-                  @else
-                    <img id="imgPreview" src="{{ asset('storage/profile_image/profile.jpg') }}" alt="">
-                  @endif
-                </div>
-                <label for="imageprofile" class="form-label">Image Profile</label>
-                <div class="input-group mb-3">
-                  <input type="file" value="{{ old('image', $personal->image) }}" name="image" id="imageprofile"
-                    class="form-control @error('imageprofile')is-invalid @enderror">
-
-                  <div class="container text-secondary">*recomendation size is 2x3, 3x4 and 4x6</div>
-
-                  @error('image')
-                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                      {{ $message }}
-                    </div>
-                  @enderror
-                </div>
-              </div>
-              <div class="col-md">
                 <div class="mb-3">
                   <label for="phone" class="form-label">Phone</label>
                   <input type="text" value="{{ old('phone', $personal->phone) }}" name="phone"

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\School;
+
 class RegistrationController extends Controller
 {
     public function submission()
@@ -11,6 +13,10 @@ class RegistrationController extends Controller
     public function detailSubmission($registration)
     {
         return view('user.action_submission', ['page' => 'submission', 'status' => $registration]);
+    }
+    public function storeRegistration(School $school)
+    {
+        return $school;
     }
 
     //owner

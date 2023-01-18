@@ -19,10 +19,10 @@
         <div class="row">
           <div class="col-md-6 d-flex gap-2 align-items-center">
             <i class="fa-solid fa-location-dot fa-xl"></i>
-            <p class="fw-bold mb-0 full-address"></p>
+            <p class="fw-bold mb-0">{{ $school->address }} <span class="full-address"></span></p>
           </div>
           <div class="col-md-6 text-end">
-            <a href="/registration" class="btn btn-outline-warning btn-lg">Register Now!</a>
+            <a href="/registration/{{ $school->school_id }}" class="btn btn-outline-warning btn-lg">Register Now!</a>
           </div>
         </div>
       </div>
@@ -56,21 +56,21 @@
         type: 'GET',
         dataType: 'json',
         success: res =>
-          $(".full-address").append("Kel." + res.nama + ", ")
+          $(".full-address").append("Kel." + res.nama + " ")
       }).then((result) => {
         $.ajax({
           url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/{{ @$school->district }}',
           type: 'GET',
           dataType: 'json',
           success: res =>
-            $(".full-address").append("Kec." + res.nama + ", ")
+            $(".full-address").append("Kec." + res.nama + " ")
         }).then(() => {
           $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/{{ @$school->city }}',
             type: 'GET',
             dataType: 'json',
             success: res =>
-              $(".full-address").append(res.nama + ", ")
+              $(".full-address").append(res.nama + " ")
           }).then(() => {
             $.ajax({
               url: 'https://dev.farizdotid.com/api/daerahindonesia/provinsi/{{ @$school->province }}',

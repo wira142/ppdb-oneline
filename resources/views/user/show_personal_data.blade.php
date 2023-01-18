@@ -7,7 +7,8 @@
         <h2 class="fw-bold">Re-check your data</h2>
       </div>
       <div class="col-md-3">
-        <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="personal_image" class="img-fluid">
+        <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="personal_image"
+          class="img-fluid rounded">
       </div>
       <div class="col-md-9 ps-md-3">
         <div class="mb-3">
@@ -138,8 +139,10 @@
           @endif
         </div>
         <div class="text-center">
-          <a href="/registration/update" class="btn btn-outline-primary">Change Data</a>
-          <a href="/registration/update" class="btn btn-success">Registration Now</a>
+          <a href="{{ route('edit-personal-data') }}" class="btn btn-outline-primary">Change Data</a>
+          <a href="{{ route('store-registration', ['school' => $school->school_id]) }}"
+            class="btn btn-success">Registration
+            Now</a>
         </div>
       </div>
     </div>

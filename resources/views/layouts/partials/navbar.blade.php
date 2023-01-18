@@ -35,6 +35,10 @@
               <a class="nav-link  @if (@$page == 'registrators') {{ 'active' }} @endif"
                 href="/user/registrators">Registrators</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link  @if (@$page == 'forms') {{ 'active' }} @endif"
+                href="/user/forms">Forms</a>
+            </li>
           @endif
         @endauth
       </ul>
