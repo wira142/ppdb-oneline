@@ -36,7 +36,7 @@ class RegistrationFormController extends Controller
             DB::beginTransaction();
             $validated = $request->validated();
             $validated['poster'] = $this->fileService->store('public/poster-images', $request->file('poster'));
-            $validated['user_id'] = auth()->user()->id;
+            $validated['school_id'] = auth()->user()->school->school_id;
             RegistrationForm::create($validated);
             DB::commit();
             return redirect('/user/forms')->with('success', 'Poster success uploaded!');
@@ -55,7 +55,7 @@ class RegistrationFormController extends Controller
             } else {
                 $validated['poster'] = $this->fileService->update('public/poster-images', $form->poster, $request->file('poster'));
             }
-            $validated['user_id'] = auth()->user()->id;
+            $validated['school_id'] = auth()->user()->school->school_id;
             $form->update($validated);
             DB::commit();
             return redirect('/user/forms')->with('success', 'Poster success updated!');

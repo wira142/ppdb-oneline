@@ -11,7 +11,7 @@ class RegistrationForm extends Model
     protected $primaryKey = 'form_id';
     protected $keyType = 'string';
     protected $fillable = [
-        'user_id',
+        'school_id',
         'poster',
         'title',
         'time_expired',

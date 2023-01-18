@@ -15,15 +15,31 @@
         <h4>School Description</h4>
         <p>{{ $school->description }}</p>
       </div>
-      <div class="col-md-10 school-location">
-        <div class="row">
-          <div class="col-md-6 d-flex gap-2 align-items-center">
-            <i class="fa-solid fa-location-dot fa-xl"></i>
-            <p class="fw-bold mb-0">{{ $school->address }} <span class="full-address"></span></p>
-          </div>
-          <div class="col-md-6 text-end">
-            <a href="/registration/{{ $school->school_id }}" class="btn btn-outline-warning btn-lg">Register Now!</a>
-          </div>
+      <div class="col-md-10 school-location mb-4">
+        <div class="d-flex gap-2 align-items-center">
+          <i class="fa-solid fa-location-dot fa-xl"></i>
+          <p class="fw-bold mb-0">{{ $school->address }} <span class="full-address"></span></p>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <h4>Available Registration</h4>
+        <div class="row mb-4">
+          @foreach ($forms as $form)
+            <div class="col-md-4 shadow rounded form-card py-2">
+              <img src="{{ $form->poster }}" class="img-fluid rounded mx-auto" alt="poster">
+              <div class="form-desc mt-2">
+                <h5>{{ $form->title }}</h5>
+                <p class="fw-bold mb-0"><i class="fa-solid fa-school"></i> {{ $form->degree }}</p>
+                <p class="fw-bold mb-0 text-warning">Due {{ date('d F Y', strtotime($form->time_expired)) }}</p>
+                <p class="text-secondary">
+                  {{ substr_replace($form->description, ' ...', 110) }}
+                </p>
+              </div>
+              <div class="form-footer">
+                <a href="/registration/{{ $form->form_id }}" class="btn btn-primary btn-sm">Register Now!</a>
+              </div>
+            </div>
+          @endforeach
         </div>
       </div>
     </div>

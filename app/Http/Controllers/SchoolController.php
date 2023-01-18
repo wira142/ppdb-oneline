@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolRequest;
+use App\Models\RegistrationForm;
 use App\Models\School;
 use App\Models\User;
 use App\Services\FileService;
@@ -18,21 +19,23 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::get();
-        $province = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/provinsi'),true);
-        
+        $province = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/provinsi'), true);
+
         foreach ($schools as $key => $school) {
-            $school->province = $province['provinsi'][array_search($school->province,array_column($province['provinsi'],'id'))]['nama'];
-            
-            $city = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/kota/'.$school->city),true);
+            $school->province = $province['provinsi'][array_search($school->province, array_column($province['provinsi'], 'id'))]['nama'];
+
+            $city = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/kota/' . $school->city), true);
 
             $school->city = $city['nama'];
         }
-        
-        return view('schools_page', ['page' => 'school','schools'=>$schools]);
+
+        return view('schools_page', ['page' => 'school', 'schools' => $schools]);
     }
     public function show(School $id)
     {
-        return view('show_school', ['page' => 'school', 'school'=>$id]);
+        $forms = RegistrationForm::where('school_id', auth()->user()->school->school_id)->get();
+        $forms = $this->fileService->getUrl('public/poster-images/', $forms, 'poster');
+        return view('show_school', ['page' => 'school', 'school' => $id, 'forms' => $forms]);
     }
     public function mySchool()
     {
@@ -55,7 +58,7 @@ class SchoolController extends Controller
             User::where('id', auth()->user()->id)->update(['level' => 'owner']);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Add school data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return redirect()->route('profile')->with('error-query', 'Add school data is failed!');
         }
@@ -74,7 +77,7 @@ class SchoolController extends Controller
             School::where('user_id', auth()->user()->id)->update($validated);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Update school data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return redirect()->route('profile')->with('error-query', 'Update school data is failed!');
         }
@@ -90,7 +93,7 @@ class SchoolController extends Controller
             User::where('id', $user_id)->update(['level' => 'user']);
             DB::commit();
             return redirect()->route('profile')->with('query', 'Delete school data is success!');
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
             DB::rollBack();
             return redirect()->route('profile')->with('error-query', 'Delete school data is failed! ' . $th);
         }

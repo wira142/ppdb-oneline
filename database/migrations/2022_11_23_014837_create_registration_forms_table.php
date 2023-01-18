@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('registration_forms', function (Blueprint $table) {
             $table->uuid('form_id')->default(DB::raw('(uuid())'))->primary();
-            $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->foreignUuid('school_id')->references('school_id')->on('schools');
             $table->text('poster');
             $table->text('title');
             $table->enum('degree', ['SD', 'SMP', 'SMA/SMK']);
