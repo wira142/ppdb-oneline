@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,15 @@ class FileService
                 $row->$target = Storage::url($path . $row->$target);
             }
             return $data;
-        } catch (\Exception$th) {
+        } catch (\Exception $th) {
+            return $th;
+        }
+    }
+    public function getObjUrl($path, $data, $target)
+    {
+        try {
+            return $data->$target = Storage::url($path . $data->$target);
+        } catch (\Throwable $th) {
             return $th;
         }
     }
@@ -23,13 +32,12 @@ class FileService
                 // Storage::put($image, $path);
                 $image->store($path);
                 return $image->hashName();
-            } catch (\Exception$th) {
+            } catch (\Exception $th) {
                 throw $th;
             }
         } else {
             return null;
         }
-
     }
     public function update($path, $old_image, $new_image = null)
     {
@@ -40,13 +48,13 @@ class FileService
                     // Storage::put($path, $new_image, 'public');
                     $new_image->store($path);
                     return $new_image->hashName();
-                } catch (\Exception$th) {
+                } catch (\Exception $th) {
                     throw response($th);
                 }
             } else {
                 return $old_image;
             }
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
             return false;
         }
     }
