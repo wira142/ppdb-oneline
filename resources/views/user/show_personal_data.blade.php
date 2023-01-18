@@ -5,6 +5,13 @@
     <div class="row justify-content-center bg-light rounded shadow p-5">
       <div class="col-12 mb-3">
         <h2 class="fw-bold">Re-check your data</h2>
+        @if (session('failed'))
+          <div class="col-md-12">
+            <div class="alert alert-danger">
+              {{ session('failed') }}
+            </div>
+          </div>
+        @endif
       </div>
       <div class="col-md-3">
         <img src="{{ asset('storage/profile_images/' . auth()->user()->image) }}" alt="personal_image"

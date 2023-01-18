@@ -20,15 +20,22 @@ class RegistrationController extends Controller
     public function storeRegistration(RegistrationForm $form)
     {
         try {
+            $user_id = auth()->user()->id;
             DB::beginTransaction();
-            $registrator = [
-                'user_id' => auth()->user()->id,
-                'form_id' => $form->form_id,
-                'status' => "register",
-            ];
-            Registration::create($registrator);
-            DB::commit();
-            return redirect('/user/submission')->with('success', 'You are success register!');
+            if (Registration::where([['user_id', $user_id], ['form_id', $form->form_id], function ($query) {
+                $query->where('status', 'register')->orWhere('status', 'accepted');
+            }])) {
+                return redirect()->back()->with('failed', 'you is have been registered!');
+            } else {
+                $registrator = [
+                    'user_id' => $user_id,
+                    'form_id' => $form->form_id,
+                    'status' => "register",
+                ];
+                Registration::create($registrator);
+                DB::commit();
+                return redirect('/user/submission')->with('success', 'You are success register!');
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th;
