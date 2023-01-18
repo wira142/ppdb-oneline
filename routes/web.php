@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('/forms')->group(function () {
                 Route::get('/', [RegistrationFormController::class, 'index']);
+                Route::get('/new-poster', [RegistrationFormController::class, 'newPoster']);
+                Route::post('/new-poster', [RegistrationFormController::class, 'storePoster'])->name('store-new-poster');
+                Route::put('/update-poster/{form}', [RegistrationFormController::class, 'updatePoster'])->name('update-poster');
                 Route::get('/show/{form}', [RegistrationFormController::class, 'show']);
             });
         });
