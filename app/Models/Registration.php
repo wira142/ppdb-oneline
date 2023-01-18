@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Registration extends Model
 {
     use HasFactory;
+    protected $primaryKey = "registration_id";
+    protected $keyType = "string";
+    protected $fillable = [
+        'form_id',
+        'user_id',
+        'status',
+    ];
 }

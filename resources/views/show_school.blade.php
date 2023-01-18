@@ -36,7 +36,7 @@
                 </p>
               </div>
               <div class="form-footer">
-                <a href="/registration/{{ $form->form_id }}" class="btn btn-primary btn-sm">Register Now!</a>
+                <a href="/schools/show/registration/{{ $form->form_id }}" class="btn btn-primary btn-sm">show more</a>
               </div>
             </div>
           @endforeach

@@ -7,6 +7,7 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\Father;
 use App\Models\Mother;
 use App\Models\Personal;
+use App\Models\RegistrationForm;
 use App\Models\School;
 use App\Models\User;
 use App\Services\FileService;
@@ -70,7 +71,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function regisForm(School $school)
+    public function regisForm(RegistrationForm $form)
     {
         if (auth()->user()->personal == null) {
             return view('registration_form', ['page' => 'school']);
@@ -83,7 +84,7 @@ class ProfileController extends Controller
                 'personal' => $personal,
                 'father' => $father,
                 'mother' => $mother,
-                'school' => $school
+                'form' => $form
             ]);
         }
     }

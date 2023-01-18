@@ -29,6 +29,11 @@ class RegistrationFormController extends Controller
         $form->poster = $this->fileService->getObjUrl('public/poster-images/', $form, 'poster');
         return view('owner.show_form', ['page' => 'forms', 'form' => $form]);
     }
+    public function detail(RegistrationForm $form)
+    {
+        $form->poster = $this->fileService->getObjUrl('public/poster-images/', $form, 'poster');
+        return view('user.show_detail_form', ['page' => 'forms', 'form' => $form]);
+    }
 
     public function storePoster(PosterRequest $request)
     {

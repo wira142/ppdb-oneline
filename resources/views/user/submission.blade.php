@@ -6,6 +6,16 @@
       <div class="col">
         <h3>Submission List</h3>
         <hr>
+        @if (session('success'))
+          <div class="alert alert-success">
+            {{ session('success') }}
+          </div>
+        @endif
+        @if (session('failed'))
+          <div class="alert alert-danger">
+            {{ session('failed') }}
+          </div>
+        @endif
         <div class="row my-4 gap-sm-4 gap-md-0 align-items-stretch">
           <div class="col-md-4">
             <div class="box-new-submission shadow rounded p-3 h-100">

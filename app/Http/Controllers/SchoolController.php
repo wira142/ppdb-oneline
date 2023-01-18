@@ -33,7 +33,7 @@ class SchoolController extends Controller
     }
     public function show(School $id)
     {
-        $forms = RegistrationForm::where('school_id', auth()->user()->school->school_id)->get();
+        $forms = RegistrationForm::where('school_id', $id->school_id)->get();
         $forms = $this->fileService->getUrl('public/poster-images/', $forms, 'poster');
         return view('show_school', ['page' => 'school', 'school' => $id, 'forms' => $forms]);
     }

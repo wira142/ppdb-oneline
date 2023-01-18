@@ -140,8 +140,7 @@
         </div>
         <div class="text-center">
           <a href="{{ route('edit-personal-data') }}" class="btn btn-outline-primary">Change Data</a>
-          <a href="{{ route('store-registration', ['school' => $school->school_id]) }}"
-            class="btn btn-success">Registration
+          <a href="{{ route('store-registration', ['form' => $form->form_id]) }}" class="btn btn-success">Registration
             Now</a>
         </div>
       </div>
