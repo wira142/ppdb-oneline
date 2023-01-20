@@ -17,68 +17,65 @@
           </div>
         @endif
         <div class="row my-4 gap-sm-4 gap-md-0 align-items-stretch">
+          @foreach ($submission as $key => $sub)
+            @if ($key == 3)
+            @break
+          @endif
           <div class="col-md-4">
             <div class="box-new-submission shadow rounded p-3 h-100">
-              <h4>School Name</h4>
-              <h6>Title Form Registration</h6>
-              <p class="text-secondary">submit : 12 Desember 2021</p>
+              <h4>{{ $sub->school_name }}</h4>
+              <h6>{{ $sub->title_form }}</h6>
+              <p class="text-secondary">submit : {{ date('d F Y', strtotime($sub->created_at)) }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="text-warning mb-0">Pending</p>
-                <a href="/user/submission/pending" class="btn btn-info">Action</a>
+                @if ($sub->status == 'register')
+                  <p class="text-warning mb-0">{{ $sub->status }}</p>
+                @elseif ($sub->status == 'qualify' || $sub->status == 'accepted')
+                  <p class="text-success mb-0">Success</p>
+                @elseif ($sub->status == 'rejected')
+                  <p class="text-danger mb-0">Rejected</p>
+                @endif
+                <a href="/user/submission/{{ $sub->registration_id }}" class="btn btn-info">Action</a>
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="box-new-submission shadow rounded p-3 h-100">
-              <h4>School Name</h4>
-              <h6>Title Form Registration</h6>
-              <p class="text-secondary">submit : 12 Desember 2021</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="text-success mb-0">Success</p>
-                <a href="/user/submission/success" class="btn btn-info">Action</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="box-new-submission shadow rounded p-3 h-100">
-              <h4>School Name</h4>
-              <h6>Title Form Registration</h6>
-              <p class="text-secondary">submit : 12 Desember 2021</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="text-danger mb-0">Rejected</p>
-                <a href="/user/submission/reject" class="btn btn-info">Action</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="history mt-5">
-          <h5>History</h5>
-          <table class="table align-middle">
-            <thead>
+        @endforeach
+      </div>
+      <div class="history mt-5">
+        <h5>History</h5>
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">School</th>
+              <th scope="col">Title</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($submission as $key => $sub)
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">School</th>
-                <th scope="col">Title</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>School Name</td>
-                <td>Title Registration</td>
-                <td>12 Desemebr 2021</td>
+                <th scope="row">{{ $key + 1 }}</th>
+                <td>{{ $sub->school_name }}</td>
+                <td>{{ $sub->title_form }}</td>
+                <td>{{ date('d F Y', strtotime($sub->created_at)) }}</td>
                 <td>
-                  <p class="m-0 text-danger">Reject</p>
+                  @if ($sub->status == 'register')
+                    <p class="text-warning mb-0">{{ $sub->status }}</p>
+                  @elseif ($sub->status == 'qualify' || $sub->status == 'accepted')
+                    <p class="text-success mb-0">Success</p>
+                  @elseif ($sub->status == 'rejected')
+                    <p class="text-danger mb-0">Rejected</p>
+                  @endif
                 </td>
-                <td><a href="#" class="btn btn-outline-primary">Action</a></td>
+                <td><a href="/user/submission/{{ $sub->registration_id }}" class="btn btn-outline-info">Action</a></td>
               </tr>
-            </tbody>
-          </table>
-        </div>
+            @endforeach
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>
 @endsection

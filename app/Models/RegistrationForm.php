@@ -18,4 +18,13 @@ class RegistrationForm extends Model
         'degree',
         'description',
     ];
+
+    public function registrator()
+    {
+        return $this->hasMany(Registration::class, 'form_id');
+    }
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
 }

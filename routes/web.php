@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile/delete', [ProfileController::class, 'destroy']);
         Route::prefix('/submission')->middleware('student')->group(function () {
             Route::get('/', [RegistrationController::class, 'submission']);
+            Route::get('/{registration}/accept', [RegistrationController::class, 'acceptRegistration'])->name('acc-submission');
+            Route::get('/{registration}/reject', [RegistrationController::class, 'rejectRegistration'])->name('reject-submission');
             Route::get('/{registration}', [RegistrationController::class, 'detailSubmission']);
         });
         Route::middleware('owner')->group(function () {

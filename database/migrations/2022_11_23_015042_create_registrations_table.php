@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('registration_id')->default(DB::raw('(uuid())'))->primary();
             $table->foreignUuid('form_id')->references('form_id')->on('registration_forms');
             $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->enum('status', ['register', 'accepted', 'rejected']);
+            $table->enum('status', ['register', 'qualify', 'accepted', 'rejected']);
             $table->timestamps();
         });
     }

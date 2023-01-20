@@ -33,7 +33,7 @@ class PosterRequest extends FormRequest
             'description' => 'required|min:10',
             'poster' => [Rule::requiredIf(function () {
 
-                if (empty(RegistrationForm::where('user_id', auth()->user()->id)->first()->poster)) {
+                if (empty(RegistrationForm::where('school_id', auth()->user()->school->school_id)->first()->poster)) {
 
                     return true;
                 }

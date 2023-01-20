@@ -15,4 +15,8 @@ class Registration extends Model
         'user_id',
         'status',
     ];
+    public function form()
+    {
+        return $this->belongsTo(RegistrationForm::class, 'form_id');
+    }
 }

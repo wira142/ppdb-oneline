@@ -22,4 +22,8 @@ class School extends Model
         'village',
         'description',
     ];
+    public function registrationForm()
+    {
+        return $this->hasMany(RegistrationForm::class, 'school_id');
+    }
 }
