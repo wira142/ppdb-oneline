@@ -4,6 +4,11 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8 p-4 bg-light shadow rounded">
+        @if (session('failed'))
+          <div class="alert alert-danger">
+            {{ session('failed') }}
+          </div>
+        @endif
         <div class="row jusitfy-content-center">
           <div class="col-md-4">
             <div class="school-logo mx-auto mb-4 mb-md-0 rounded">
@@ -36,7 +41,7 @@
               </div>
             @endif
 
-            @if ($submission->status == 'reject')
+            @if ($submission->status == 'rejected')
               <div class="reject-alert">
                 <div class="border border-danger my-3 p-4 text-center">
                   <h4 class="mb-0 fw-bold text-danger">REJECTED</h4>
@@ -65,8 +70,6 @@
 @section('script')
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script>
-    console.log(new Date("{{ $submission->updated_at }}"));
-
     function makeTimer() {
 
       //		var endTime = new Date("29 April 2018 9:56:00 GMT+01:00");	
@@ -82,7 +85,9 @@
       var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
       var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
       var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-
+      if (days + hours + minutes + seconds < 1) {
+        clearInterval(countDown);
+      }
       if (hours < "10") {
         hours = "0" + hours;
       }
@@ -93,10 +98,9 @@
         seconds = "0" + seconds;
       }
       $('.countdown').html(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
-
     }
 
-    setInterval(function() {
+    let countDown = setInterval(function() {
       makeTimer();
     }, 1000);
   </script>

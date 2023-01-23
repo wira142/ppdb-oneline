@@ -30,7 +30,7 @@
                 @if ($sub->status == 'register')
                   <p class="text-warning mb-0">{{ $sub->status }}</p>
                 @elseif ($sub->status == 'qualify' || $sub->status == 'accepted')
-                  <p class="text-success mb-0">Success</p>
+                  <p class="text-success mb-0">{{ $sub->status }}</p>
                 @elseif ($sub->status == 'rejected')
                   <p class="text-danger mb-0">Rejected</p>
                 @endif

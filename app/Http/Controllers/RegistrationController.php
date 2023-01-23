@@ -20,6 +20,16 @@ class RegistrationController extends Controller
         foreach ($submission as $key => $sub) {
             $sub->title_form = $sub->form->title;
             $sub->school_name = $sub->form->school->name;
+
+            //check time
+            if ($sub->status == 'qualify') {
+                $start_date = strtotime($sub->updated_at);
+                $end_date = strtotime(date(now()));
+                $time_life = (($end_date - $start_date) / (60 * 60)) / 24;
+                if ($time_life >= 3) {
+                    Registration::where('registration_id', $sub->registration_id)->first()->update(['status' => 'rejected']);
+                }
+            }
         }
         return view('user.submission', ['page' => 'submission', 'submission' => $submission]);
     }
@@ -62,6 +72,9 @@ class RegistrationController extends Controller
             $end_date = strtotime(date(now()));
             $time_life = (($end_date - $start_date) / (60 * 60)) / 24;
             if ($time_life >= 3) {
+                if ($registration->status == 'qualify') {
+                    Registration::where('registration_id', $registration->registration_id)->first()->update(['status' => 'rejected']);
+                }
                 return back()->with('failed', 'sorry,your time is up!');
             } else {
                 Registration::where([['user_id', auth()->user()->id], ['status', '!=', 'accepted'], ['registration_id', '!=', $registration->registration_id]])->update(['status' => 'rejected']);
