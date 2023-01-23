@@ -29,19 +29,36 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>
-                <div class="pas-photo">
-                  <img src="{{ asset('storage/profile_image/example-profile.jpg') }}" alt="" class="img-fluid">
-                </div>
-              </td>
-              <td>20604477</td>
-              <td>Agus Sulaiman</td>
-              <td>REGISTRATION SD 2022</td>
-              <td>Waiting</td>
-              <td><a href="/user/registrators/user_id" class="btn btn-outline-primary">Action</a></td>
-            </tr>
+            @if ($students)
+              @foreach ($students as $key => $student)
+                <tr>
+                  <th scope="row">{{ $key + 1 }}</th>
+                  <td>
+                    <div class="pas-photo" style="max-width: 60px">
+                      <img src="{{ $student->image }}" alt="profile-image" class="img-fluid rounded">
+                    </div>
+                  </td>
+                  <td>{{ $student->personal->nisn }}</td>
+                  <td>{{ $student->name }}</td>
+                  <td>{{ $student->form_name }}</td>
+                  <td>
+                    @if ($student->status_form == 'register')
+                      <p class="text-warning mb-0">{{ $student->status_form }}</p>
+                    @elseif ($student->status_form == 'qualify' || $student->status_form == 'accepted')
+                      <p class="text-success mb-0">{{ $student->status_form }}</p>
+                    @elseif ($student->status_form == 'rejected')
+                      <p class="text-danger mb-0">Rejected</p>
+                    @endif
+                  </td>
+                  <td><a href="/user/registrators/{{ $student->id }}/{{ $student->registration_id }}"
+                      class="btn btn-outline-primary">Action</a></td>
+                </tr>
+              @endforeach
+            @else
+              <tr>
+                <td colspan="7">Registrators not found!</td>
+              </tr>
+            @endif
           </tbody>
         </table>
       </div>

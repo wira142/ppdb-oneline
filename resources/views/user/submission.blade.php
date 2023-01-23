@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody>
-            @if (is_null($submission))
+            @if (@$students)
               @foreach ($submission as $key => $sub)
                 <tr>
                   <th scope="row">{{ $key + 1 }}</th>

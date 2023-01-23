@@ -21,7 +21,7 @@ class RegistrationForm extends Model
 
     public function registrator()
     {
-        return $this->hasMany(Registration::class, 'form_id');
+        return $this->hasMany(Registration::class, 'form_id', 'form_id');
     }
     public function school()
     {

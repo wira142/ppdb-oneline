@@ -61,10 +61,12 @@ Route::middleware('auth')->group(function () {
 
             Route::prefix('/registrators')->group(function () {
                 Route::get('/', [RegistrationController::class, 'registrators']);
-                Route::get('/user_id', [RegistrationController::class, 'showStudent']);
                 Route::get('/back', function () {
                     return redirect('/user/registrators');
                 });
+                Route::get('/student/{registration}/qualify', [RegistrationController::class, 'qualifyRegistrators'])->name('registrator-qualify');
+                Route::get('/student/{registration}/reject', [RegistrationController::class, 'rejectRegistrators'])->name('registrator-reject');
+                Route::get('/{user}/{registration_id}', [RegistrationController::class, 'showStudent']);
             });
             Route::prefix('/forms')->group(function () {
                 Route::get('/', [RegistrationFormController::class, 'index']);

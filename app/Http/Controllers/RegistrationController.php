@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use App\Models\RegistrationForm;
 use App\Models\School;
+use App\Models\User;
 use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 
@@ -106,10 +107,69 @@ class RegistrationController extends Controller
     //owner
     public function registrators()
     {
-        return view('owner.registrators', ['page' => 'registrators']);
+        $registrators = auth()->user()->school->registrationForm;
+        $students = [];
+        foreach ($registrators as $key => $form) {
+            $registrations = $form->registrator;
+            foreach ($registrations as $key => $register) {
+                $user = $register->user;
+                $user->form_name = $form->title;
+                $user->status_form = $register->status;
+                $user->registration_id = $register->registration_id;
+                array_push($students, $user);
+            }
+        }
+        $students = $this->file->getUrl('public/profile_images/', $students, 'image');
+        return view('owner.registrators', ['page' => 'registrators', "students" => $students]);
     }
-    public function showStudent()
+    public function qualifyRegistrators(Registration $registration)
     {
-        return view('owner.show-student', ['page' => 'registrators']);
+        try {
+            DB::beginTransaction();
+            if ($registration->status == 'rejected') {
+                return back()->with('failed', 'Sorry, the registration has been rejected!');
+            } else {
+                $update = ['status' => 'qualify'];
+                $registration->update($update);
+                return back()->with('success', 'The registration pass the qualifications!');
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
+    }
+    public function rejectRegistrators(Registration $registration)
+    {
+        try {
+            DB::beginTransaction();
+            if ($registration->status == 'rejected') {
+                return back()->with('failed', 'Sorry, the registration has been rejected!');
+            } else {
+                $update = ['status' => 'rejected'];
+                $registration->update($update);
+                return back()->with('failed', 'The Registration does not qualify!');
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
+    }
+    public function showStudent(User $user, Registration $registration_id)
+    {
+        $personal = $user->personal;
+        $father = $user->father;
+        $mother = $user->mother;
+        $user->image = $this->file->getObjUrl('public/profile_images/', $user, 'image');
+        $user->form_id = $registration_id;
+        $user->status_form = $registration_id->status;
+        return view('owner.show-student', [
+            'page' => 'registrators',
+            'personal' => $personal,
+            'father' => $father,
+            'mother' => $mother,
+            'user' => $user,
+        ]);
     }
 }
