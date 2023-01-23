@@ -54,24 +54,31 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($submission as $key => $sub)
+            @if (is_null($submission))
+              @foreach ($submission as $key => $sub)
+                <tr>
+                  <th scope="row">{{ $key + 1 }}</th>
+                  <td>{{ $sub->school_name }}</td>
+                  <td>{{ $sub->title_form }}</td>
+                  <td>{{ date('d F Y', strtotime($sub->created_at)) }}</td>
+                  <td>
+                    @if ($sub->status == 'register')
+                      <p class="text-warning mb-0">{{ $sub->status }}</p>
+                    @elseif ($sub->status == 'qualify' || $sub->status == 'accepted')
+                      <p class="text-success mb-0">Success</p>
+                    @elseif ($sub->status == 'rejected')
+                      <p class="text-danger mb-0">Rejected</p>
+                    @endif
+                  </td>
+                  <td><a href="/user/submission/{{ $sub->registration_id }}" class="btn btn-outline-info">Action</a>
+                  </td>
+                </tr>
+              @endforeach
+            @else
               <tr>
-                <th scope="row">{{ $key + 1 }}</th>
-                <td>{{ $sub->school_name }}</td>
-                <td>{{ $sub->title_form }}</td>
-                <td>{{ date('d F Y', strtotime($sub->created_at)) }}</td>
-                <td>
-                  @if ($sub->status == 'register')
-                    <p class="text-warning mb-0">{{ $sub->status }}</p>
-                  @elseif ($sub->status == 'qualify' || $sub->status == 'accepted')
-                    <p class="text-success mb-0">Success</p>
-                  @elseif ($sub->status == 'rejected')
-                    <p class="text-danger mb-0">Rejected</p>
-                  @endif
-                </td>
-                <td><a href="/user/submission/{{ $sub->registration_id }}" class="btn btn-outline-info">Action</a></td>
+                <td colspan="7" class="text-center text-danger">You don't have any registration!</td>
               </tr>
-            @endforeach
+            @endif
           </tbody>
         </table>
       </div>

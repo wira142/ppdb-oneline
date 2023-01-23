@@ -85,8 +85,12 @@
       var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
       var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
       var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-      if (days + hours + minutes + seconds < 1) {
+      if (days + hours + minutes + seconds < 1 || timeLeft < 1) {
         clearInterval(countDown);
+        days = 0;
+        hours = 0;
+        seconds = 0;
+        minutes = 0;
       }
       if (hours < "10") {
         hours = "0" + hours;

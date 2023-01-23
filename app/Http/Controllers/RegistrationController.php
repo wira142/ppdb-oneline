@@ -49,6 +49,8 @@ class RegistrationController extends Controller
                 $query->where('status', 'register')->orWhere('status', 'accepted')->orWhere('status', 'qualify');
             })->get()->isEmpty() == 0) {
                 return redirect()->back()->with('failed', 'you is have been registered!');
+            } else if (strtotime($form->time_expired) < strtotime(date(now()))) {
+                return redirect()->back()->with('failed', 'Registration time is up!');
             } else {
                 $registrator = [
                     'user_id' => $user_id,
@@ -73,7 +75,7 @@ class RegistrationController extends Controller
             $time_life = (($end_date - $start_date) / (60 * 60)) / 24;
             if ($time_life >= 3) {
                 if ($registration->status == 'qualify') {
-                    Registration::where('registration_id', $registration->registration_id)->first()->update(['status' => 'rejected']);
+                    Registration::where([['registration_id', $registration->registration_id], ['user_id', auth()->user()->id]])->first()->update(['status' => 'rejected']);
                 }
                 return back()->with('failed', 'sorry,your time is up!');
             } else {
@@ -86,6 +88,18 @@ class RegistrationController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th;
+        }
+    }
+    public function rejectRegistration(Registration $registration)
+    {
+        try {
+            DB::beginTransaction();
+            Registration::where([['registration_id', $registration->registration_id], ['user_id', auth()->user()->id]])->first()->update(['status' => 'rejected']);
+            return redirect('user/submission')->with('success', 'Rejected school is success');
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('user/submission')->with('failed', 'Rejected school is failed!');
         }
     }
 
