@@ -4,7 +4,8 @@
   <div class="container my-5">
     <div class="row justify-content-center">
       <div class="col-md-10 show-schools-image mb-4">
-        <img src="{{ asset('storage/school_images/' . $school->school_image) }}" alt="" class="img-fluid">
+        <img src="{{ asset('storage/school_images/' . $school->school_image) }}" alt="school-image"
+          class="img-fluid rounded">
       </div>
       <div class="col-md-10 title-school">
         <h3 class="fw-bold">{{ $school->name }}</h3>
@@ -22,7 +23,9 @@
         </div>
       </div>
       <div class="col-md-10">
-        <h4>Available Registration</h4>
+        @if (@$froms)
+          <h4>Available Registration</h4>
+        @endif
         <div class="row mb-4">
           @foreach ($forms as $form)
             <div class="col-md-4 shadow rounded form-card py-2">

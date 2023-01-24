@@ -15,14 +15,22 @@
           </div>
         @endif
         <div class="row justify-content-center">
+          @if ($user->status_form != 'register')
+            <div class="col-12">
+              @if ($user->status_form == 'rejected')
+                <h5 class="my-3 border rounded p-2 bg-success text-light">The register was <span
+                    class="fw-bold text-danger">{{ $user->status_form }}</span>
+                </h5>
+              @else
+                <h5 class="my-3 border rounded p-2 bg-success text-light">The register was <span
+                    class="fw-bold text-warning">{{ $user->status_form }}</span>
+                </h5>
+              @endif
+            </div>
+          @endif
           <div class="col-md-4">
             <div class="pas-photo-lg">
               <img src="{{ $user->image }}" alt="pas-photo" class="img-fluid rounded">
-              @if ($user->status_form != 'register')
-                <h5 class="my-3 border rounded p-2 border-warning">The register was <span
-                    class="fw-bold @if ($user->status_form == 'rejected') {{ 'text-danger' }}@else{{ 'text-success' }} @endif">{{ $user->status_form }}</span>
-                </h5>
-              @endif
             </div>
           </div>
           <div class="col-md-8">

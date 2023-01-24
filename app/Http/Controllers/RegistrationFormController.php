@@ -16,7 +16,7 @@ class RegistrationFormController extends Controller
     }
     public function index()
     {
-        $forms = RegistrationForm::get();
+        $forms = RegistrationForm::where('school_id', auth()->user()->school->school_id)->get();
         $forms = $this->fileService->getUrl('public/poster-images/', $forms, 'poster');
         return view('owner.forms', ['page' => 'forms', 'forms' => $forms]);
     }

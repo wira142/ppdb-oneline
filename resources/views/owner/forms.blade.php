@@ -20,8 +20,10 @@
         <hr>
       </div>
       @foreach ($forms as $form)
-        <div class="col-md-4 shadow rounded form-card py-2">
-          <img src="{{ $form->poster }}" class="img-fluid rounded mx-auto" alt="poster">
+        <div class="col-md-4 shadow rounded form-card py-3">
+          <div class="d-flex justify-content-center">
+            <img src="{{ $form->poster }}" class="img-fluid rounded" alt="poster">
+          </div>
           <div class="form-desc mt-2">
             <h5>{{ $form->title }}</h5>
             <p class="fw-bold mb-0"><i class="fa-solid fa-school"></i> {{ $form->degree }}</p>

@@ -12,22 +12,29 @@
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active rounded" data-bs-interval="5000">
-              <img src="{{ asset('storage/carousel/carousel-6.jpg') }}" class="d-block w-100" alt="carousel-1">
-              <div class="carousel-caption d-none d-md-block">
+              <div class="carousel-image">
+                <img src="{{ asset('storage/carousel/carousel-6.jpg') }}" class="d-block img-fluid w-100"
+                  alt="carousel-1">
+              </div>
+              <div class="carousel-caption d-md-block">
                 <h2>Play Together</h2>
                 <p>Hanging out with new friends in a comfortable school</p>
               </div>
             </div>
             <div class="carousel-item rounded" data-bs-interval="5000">
-              <img src="{{ asset('storage/carousel/carousel-4.jpg') }}" class="d-block w-100" alt="carousel-2">
-              <div class="carousel-caption d-none d-md-block">
+              <div class="carousel-image">
+                <img src="{{ asset('storage/carousel/carousel-4.jpg') }}" class="d-block w-100" alt="carousel-2">
+              </div>
+              <div class="carousel-caption d-md-block">
                 <h2>Increase Knowledge</h2>
                 <p>Keep going to a higher level, broaden your horizons</p>
               </div>
             </div>
             <div class="carousel-item rounded" data-bs-interval="5000">
-              <img src="{{ asset('storage/carousel/carousel-5.jpg') }}" class="d-block w-100" alt="carousel-3">
-              <div class="carousel-caption d-none d-md-block">
+              <div class="carousel-image">
+                <img src="{{ asset('storage/carousel/carousel-5.jpg') }}" class="d-block w-100" alt="carousel-3">
+              </div>
+              <div class="carousel-caption d-md-block">
                 <h2>Studying Together</h2>
                 <p>Learn and develop together with friends at school</p>
               </div>
@@ -51,7 +58,7 @@
       <div class="col-md-12">
         <h3 fw-bold>Daftar Sekolah</h3>
         <hr>
-          @include('layouts.partials.card_schools')
+        @include('layouts.partials.card_schools')
       </div>
     </div>
   </div>
