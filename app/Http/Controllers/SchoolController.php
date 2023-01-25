@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolRequest;
+use App\Models\Registration;
 use App\Models\RegistrationForm;
 use App\Models\School;
 use App\Models\User;
 use App\Services\FileService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SchoolController extends Controller
@@ -45,6 +47,39 @@ class SchoolController extends Controller
     {
         $school = auth()->user()->school;
         return view('owner.edit_school', ['page' => '', 'school' => $school]);
+    }
+    public function findSchool(Request $req)
+    {
+        try {
+            $schools = [];
+            if (@$req->stage != null) {
+                $degrees = RegistrationForm::where('degree', $req->stage)->get();
+                foreach ($degrees as $key => $degree) {
+                    array_push($schools, $degree->school);
+                }
+
+                foreach ($schools as $key => $school) {
+                    if (preg_match('/' . $req->keyword . '/i', $school->name) == 0 || $req->location != null ? $school->province != $req->location : "") {
+                        unset($schools[$key]);
+                    }
+                }
+            } else {
+                $schools = School::where([['name', 'LIKE', '%' . $req->keyword . '%'], $req->location != null ? ['province', @$req->location] : [null]])->get();
+            }
+
+            $province = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/provinsi'), true);
+
+            foreach ($schools as $key => $school) {
+                $school->province = $province['provinsi'][array_search($school->province, array_column($province['provinsi'], 'id'))]['nama'];
+
+                $city = json_decode(file_get_contents('https://dev.farizdotid.com/api/daerahindonesia/kota/' . $school->city), true);
+
+                $school->city = $city['nama'];
+            }
+            return view('schools_page', ['page' => 'school', 'schools' => $schools, 'keyword' => $req->keyword, 'location' => $req->location, 'stage' => $req->stage]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function store(SchoolRequest $request)

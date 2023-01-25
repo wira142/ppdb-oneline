@@ -6,6 +6,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\RegistrationFormController;
 use App\Http\Controllers\SchoolController;
 use App\Models\RegistrationForm;
+use App\Models\School;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::prefix('/schools')->group(function () {
     Route::get('/', [SchoolController::class, 'index']);
     Route::get('/show/{id}', [SchoolController::class, 'show']);
     Route::get('/show/registration/{form}', [RegistrationFormController::class, 'detail']);
+    Route::get('/find', [SchoolController::class, 'findSchool'])->name('find-school');
 });
 
 Route::middleware('auth')->group(function () {
